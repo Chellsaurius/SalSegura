@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "314911394596",
+    "project_id": "salamancareporta-a6218",
+    "storage_bucket": "salamancareporta-a6218.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:314911394596:android:901985b1eac767804081b1",
+        "android_client_info": {
+          "package_name": "com.salamancareporta"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "314911394596-9nbh8nhp2ko03bag5rogjdlnhjjs845s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.salamancareporta",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "314911394596-s6lepfv33hr4e6mi43f0ihsaj3q4nara.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDWoCpwVMr9gFLNGgNPSJhv3faM8YOq1Lw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "314911394596-s6lepfv33hr4e6mi43f0ihsaj3q4nara.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
