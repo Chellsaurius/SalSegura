@@ -11,6 +11,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import AddPostScreen from '../screens/AddPostScreen';
 import EditProfileScreen from '../screens/EditProfileScreen';
 import HomeScreen from '../screens/HomeScreen';
+import MyPostScreen from '../screens/MyPostScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 
 const Stack = createStackNavigator();
@@ -26,7 +27,7 @@ const FeedStack = ({navigation}) => (
       options={{
         headerTitleAlign: 'center',
         headerTitleStyle: {
-          color: '#EA9215',
+          color: '#EEEEEE',
           fontFamily: 'Kufam-SemiBoldItalic',
           fontSize: 18,
         },
@@ -48,12 +49,35 @@ const FeedStack = ({navigation}) => (
         ),
       }}
     />
-    
-    {/* <Stack.Screen
+    <Stack.Screen
+      name="AddPost"
+      component={AddPostScreen}
+      options={{
+        title: 'Generar reporte',
+        headerTitleAlign: 'center',
+        headerTitleStyle: {
+          color: '#EEEEEE',
+          fontFamily: 'Kufam-SemiBoldItalic',
+          fontSize: 18,
+        },
+        headerStyle: {
+          backgroundColor: '#303841',
+          shadowColor: '#3A4750',
+          elevation: 0,
+        },
+        headerBackTitleVisible: false,
+        headerBackImage: () => (
+          <View style={{marginLeft: 15}}>
+            <Ionicons name="arrow-back" size={25} color="#EA9215" />
+          </View>
+        ),
+      }}
+    />
+    <Stack.Screen
       name="HomeProfile"
       component={ProfileScreen}
       options={{
-        title: 'Hola XD',
+        title: '',
         headerTitleAlign: 'center',
         headerStyle: {
           backgroundColor: '#fff',
@@ -67,40 +91,52 @@ const FeedStack = ({navigation}) => (
           </View>
         ),
       }}
-    /> */}
+    />
     </Stack.Navigator>
 );
 
-const AddPostStack = ({}) => (
+const MyPostStack = ({navigation}) => (
   <Stack.Navigator>
+    <Stack.Screen name="Mis reportes" component={MyPostScreen} 
+    options={{
+      headerTitleAlign: 'center',
+      headerTitleStyle: {
+        color: '#EEEEEE',
+        fontFamily: 'Kufam-SemiBoldItalic',
+        fontSize: 18,
+    },
+      headerStyle: {
+        backgroundColor: '#303841',
+        shadowColor: '#ffffff',
+        elevation: 0,
+    },
+    }}
+    />
     <Stack.Screen
-      name="AddPost"
-      component={AddPostScreen}
+      name="Mis Post"
+      component={MyPostScreen}
       options={{
-        title: 'Generar reporte',
         headerTitleAlign: 'center',
         headerTitleStyle: {
-          color: '#EA9215',
+          color: '#EEEEEE',
           fontFamily: 'Kufam-SemiBoldItalic',
           fontSize: 18,
-        },
+      },
         headerStyle: {
           backgroundColor: '#303841',
-          shadowColor: '#000000',
+          shadowColor: '#ffffff',
           elevation: 0,
-        },
-        headerBackTitleVisible: false,
-        headerBackImage: () => (
-          <View style={{marginLeft: 15}}>
-            <Ionicons name="arrow-back" size={25} color="#000000" />
-          </View>
-        ),
+      },
       }}
+      // options={({route}) => ({
+      //   // title: route.params.userName,
+      //   headerBackTitleVisible: false,
+      // })}
     />
   </Stack.Navigator>
 );
 
-const ProfileStack = ({}) => (
+const ProfileStack = ({navigation}) => (
   <Stack.Navigator>
     <Stack.Screen
       name="Profile"
@@ -113,7 +149,7 @@ const ProfileStack = ({}) => (
           fontSize: 18,
       },
         headerStyle: {
-            backgroundColor: '#303841',
+          backgroundColor: '#303841',
           shadowColor: '#ffffff',
           elevation: 0,
       },
@@ -164,19 +200,19 @@ const AppStack = () => {
         }}
       />
       <Tab.Screen
-        name="AddPost"
-        component={AddPostStack}
+        name="MisReportes"
+        component={MyPostStack}
         options={{
           // title: "Generar reporte",
           headerShown: false,
-          tabBarLabel: 'Generar Reporte',
+          tabBarLabel: 'Mis Reportes',
           tabBarIcon: ({color, size}) => (
             <MaterialIcons name="post-add" color={color} size={size} />
           ),
         }}
       />
       <Tab.Screen
-        name="Profile"
+        name="MyProfile"
         component={ProfileStack}
         options={{
           headerShown: false,
