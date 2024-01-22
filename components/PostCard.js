@@ -1,3 +1,4 @@
+import moment from 'moment';
 import React, { useContext } from 'react';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { AuthContext } from '../navigation/AuthProvider';
@@ -23,7 +24,7 @@ const PostCard = ({item, onDelete}) => {
         <UserImg source={{uri: item.userImg}} />
         <UserInfoText>
           <UserName>{item.userName}</UserName>
-          <PostTime>{item.postTime.toString()}</PostTime>
+          <PostTime>{moment(item.postTime.toDate()).fromNow()}</PostTime>
         </UserInfoText>
       </UserInfo>
       <PostText>Calle: {item.calle}</PostText>
