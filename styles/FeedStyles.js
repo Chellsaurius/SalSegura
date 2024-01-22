@@ -68,3 +68,26 @@ export const PostImg = styled.Image`
   margin-top: 5px;
   border-radius: 20px;
 `;
+
+export const InteractionWrapper = styled.View`
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 15px;
+`;
+
+export const Interaction = styled.TouchableOpacity`
+    flex-direction: row;
+    justify-content: center;
+    border-radius: 5px;
+    padding: 2px 5px;
+    background-color: ${props => props.active ? '#000000' : 'transparent'}
+`;
+
+/* export const InteractionText = styled.Text`
+    font-size: 12px;
+    font-family: 'Lato-Regular';
+    font-weight: bold;
+    color: ${props => props.active ? '#2e64e5' : '#333'};
+    margin-top: 5px;
+    margin-left: 5px;
+`; */
