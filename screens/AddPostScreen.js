@@ -63,14 +63,14 @@ const AddPostScreen = () => {
         reporte: descripcion,
         repImg: imageUrl,
         estatus: 0,
-        respReporte: "",
+        respReporte: "0",
         repTime: firestore.Timestamp.fromDate(new Date()),
       })
       .then(() => {
         console.log('Reporte subido!');
         Alert.alert(
-          'Reporte subido',
-          'Tu reporte esta en revición. Gracias por hacer de Salamanca Gto. una mejor ciudad!😁',
+          'Tu reporte ha sido recivido',
+          'Tu reporte esta en revisión. Gracias por hacer de Salamanca Gto. una mejor ciudad! 😁',
         );
         setCalle(null);
         setColonia(null);

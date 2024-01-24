@@ -1,17 +1,17 @@
 import React from 'react';
-import {View, Text, Button, Image, StyleSheet, ViewComponent, TouchableOpacity} from 'react-native';
+import { Button, Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import Onboarding from 'react-native-onboarding-swiper';
 
 const Skip = ({...props}) => (
   <Button
-    title='Saltar'
+    title='Omitir'
     color="#000000"
     {...props}
   />
 );
 const Next = ({...props}) => (
   <Button
-    title='->'
+    title='>'
     color="#045633"
     {...props}
   />

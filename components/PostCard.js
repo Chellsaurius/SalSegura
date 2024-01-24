@@ -4,16 +4,18 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { AuthContext } from '../navigation/AuthProvider';
 import {
   Card,
+  DividerResp,
   Interaction,
   InteractionWrapper,
-  PostImg,
+  PostImgResp,
   PostText,
   PostTime,
   UserImg,
   UserInfo,
   UserInfoText,
-  UserName,
+  UserName
 } from '../styles/FeedStyles';
+import ProgressiveImage from './ProgressiveImage';
 
 const PostCard = ({item, onDelete}) => {
   const {user, logout} = useContext(AuthContext);
@@ -32,7 +34,13 @@ const PostCard = ({item, onDelete}) => {
       <PostText>{item.reporte}</PostText>
       {/* <Divider /> */}
 
-      <PostImg source={{uri: item.postImg}} />
+      {/* <PostImg source={{uri: item.postImg}} /> */}
+      <ProgressiveImage 
+        defaultImageSource={require('../assets/posts/post-img-1.jpg')}
+        source={{uri: item.postImg}}
+        style={{width: '100%', height: 250, marginTop: 10, borderRadius: 20 }}
+        resizeMode='cover'
+      />
 
       {user.uid == item.userId ? (
         <InteractionWrapper>
@@ -41,6 +49,14 @@ const PostCard = ({item, onDelete}) => {
           </Interaction>
         </InteractionWrapper>
       ) : null}
+      {item.respReporte != '0' ? (
+      <DividerResp /> ): null}
+      {item.respReporte != '0' ? (
+      <PostText>Reporte atendido: </PostText> ): null}
+      {item.respReporte != '0' ? (
+        <PostImgResp source={{uri: item.respReporte}} />
+      ): null}
+      
     </Card>
   );
 };

@@ -62,11 +62,32 @@ export const Divider = styled.View`
   align-self: center;
 `;
 
+export const DividerResp = styled.View`
+  border-bottom-color: #61677A;
+  border-bottom-width: 1px;
+  width: 92%;
+  align-self: center;
+  height: 2px;
+  margin: 5px 10px 0px 0px;
+  
+`;
+
+
 export const PostImg = styled.Image`
   width: 100%;
   height: 250px;
   margin-top: 5px;
   border-radius: 20px;
+  
+`;
+
+export const PostImgResp = styled.Image`
+  width: 100%;
+  height: 250px;
+  margin-top: 5px;
+  border-radius: 20px;
+  /* margin-bottom: 10px; */
+
 `;
 
 export const InteractionWrapper = styled.View`
