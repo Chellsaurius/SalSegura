@@ -65,13 +65,13 @@ const SignupScreen = ({navigation}) => {
 
       {Platform.OS === 'android' ? (
         <View>
-          <SocialButton
+          {/* <SocialButton
             buttonTitle="Sign Up with Facebook"
             btnType="facebook"
             color="#4867aa"
             backgroundColor="#e6eaf4"
             onPress={() => fbLogin()}
-          />
+          /> */}
 
           <SocialButton
             buttonTitle="Sign Up with Google"

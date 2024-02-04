@@ -1,10 +1,13 @@
 import firestore from '@react-native-firebase/firestore';
 import moment from 'moment';
 import React, { useContext, useEffect, useState } from 'react';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { AuthContext } from '../navigation/AuthProvider';
 import {
   Card,
   DividerResp,
+  Interaction,
+  InteractionWrapper,
   PostImgResp,
   PostText,
   PostTextRes,
@@ -16,7 +19,7 @@ import {
 } from '../styles/FeedStyles';
 import ProgressiveImage from './ProgressiveImage';
 
-const PostCard = ({item, onDelete}) => {
+const PostCardUser = ({item, onDelete}) => {
   const {user, logout} = useContext(AuthContext);
   const [userData, setUserData] = useState(null);
 
@@ -69,6 +72,13 @@ const PostCard = ({item, onDelete}) => {
         resizeMode="cover"
       />
 
+      {item.estatus == 0 ? (
+        <InteractionWrapper>
+          <Interaction onPress={() => onDelete(item.id)}>
+            <FontAwesome5 name="trash-alt" size={25} color="#000000" />
+          </Interaction>
+        </InteractionWrapper>
+      ) : null}
       {item.respReporte != '0' ? <DividerResp /> : null}
       {item.respReporte != '0' ? (
         <PostTextRes>Reporte atendido: </PostTextRes>
@@ -80,4 +90,4 @@ const PostCard = ({item, onDelete}) => {
   );
 };
 
-export default PostCard;
+export default PostCardUser;

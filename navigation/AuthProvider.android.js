@@ -1,4 +1,5 @@
 import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import React, { createContext, useState } from 'react';
 import { Alert } from 'react-native';
@@ -70,7 +71,23 @@ export const AuthProvider = ({children}) => {
       register: async (email, password) => {
         try {
           // if (password.length >= 6) {
-            await auth().createUserWithEmailAndPassword(email, password);
+            await auth().createUserWithEmailAndPassword(email, password)
+            .then(() => {
+              firestore().collection('users').doc(auth().currentUser.uid)
+              .set({
+                fname: '',
+                lname: '',
+                email: email,
+                createdAt: firestore.Timestamp.fromDate(new Date()),
+                userImg: null
+              })
+              .catch(error => {
+                console.log('Algo salió mal al agregar un usuario: ', error);
+              });
+            })
+            .catch(error => {
+              console.log('Algo salió mal al registrarse: ', error);
+            });
           // }else{
           //   Alert('La contraseña debe contener al menos 6 caracteres');
           // }

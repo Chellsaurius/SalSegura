@@ -55,6 +55,16 @@ export const PostText = styled.Text`
   padding-bottom: 15px;
 `;
 
+export const PostTextRes = styled.Text`
+  font-size: 14px;
+  font-family: 'Courier New';
+  color: black;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+`;
+
 export const Divider = styled.View`
   border-bottom-color: #DDDDDD;
   border-bottom-width: 1px;

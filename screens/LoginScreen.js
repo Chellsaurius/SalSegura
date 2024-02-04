@@ -24,7 +24,7 @@ const LoginScreen = ({navigation}) => {
         source={require('../assets/img/salamanca.png')}
         style={styles.logo}
       />
-      <Text style={styles.text}>Salamanca Reporta</Text>
+      <Text style={styles.text}>Salamanca Segura</Text>
       
       <FormInput
         labelValue={email}
@@ -63,13 +63,13 @@ const LoginScreen = ({navigation}) => {
       
       {Platform.OS === 'android' ? (
         <View>
-          <SocialButton
+          {/* <SocialButton
             buttonTitle="Sign In with Facebook"
             btnType="facebook"
             color="#4867aa"
             backgroundColor="#e6eaf4"
             onPress={() => fbLogin()}
-          />
+          /> */}
 
           <SocialButton
             buttonTitle="Sign In with Google"

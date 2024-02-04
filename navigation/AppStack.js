@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 import { View } from 'react-native';
 
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -22,7 +23,7 @@ const FeedStack = ({navigation}) => (
   <Stack.Navigator>
     {/* <Stack.Screen name='Salamanca' component={HomeScreen} /> */}
     <Stack.Screen
-      name="Salamanca Reporta"
+      name="Salamanca Segura"
       component={HomeScreen}
       options={{
         headerTitleAlign: 'center',
@@ -31,10 +32,10 @@ const FeedStack = ({navigation}) => (
           fontFamily: 'Kufam-SemiBoldItalic',
           fontSize: 18,
         },
-          headerStyle: {
-            backgroundColor: '#303841',
-            shadowColor: '#ffffff',
-            elevation: 0,
+        headerStyle: {
+          backgroundColor: '#303841',
+          shadowColor: '#ffffff',
+          elevation: 0,
         },
         headerRight: () => (
           <View style={{marginRight: 10}}>
@@ -73,7 +74,7 @@ const FeedStack = ({navigation}) => (
         ),
       }}
     />
-    <Stack.Screen
+    {/* <Stack.Screen
       name="HomeProfile"
       component={ProfileScreen}
       options={{
@@ -87,30 +88,32 @@ const FeedStack = ({navigation}) => (
         headerBackTitleVisible: false,
         headerBackImage: () => (
           <View style={{marginLeft: 15}}>
-            <Ionicons name="arrow-back" size={25} color="#2e64e5" />
+            <AntDesign name="leftcircleo" size={25} color="#FFFFFF" />
           </View>
         ),
       }}
-    />
-    </Stack.Navigator>
+    /> */}
+  </Stack.Navigator>
 );
 
 const MyPostStack = ({navigation}) => (
   <Stack.Navigator>
-    <Stack.Screen name="Mis reportes" component={MyPostScreen} 
-    options={{
-      headerTitleAlign: 'center',
-      headerTitleStyle: {
-        color: '#EEEEEE',
-        fontFamily: 'Kufam-SemiBoldItalic',
-        fontSize: 18,
-    },
-      headerStyle: {
-        backgroundColor: '#303841',
-        shadowColor: '#ffffff',
-        elevation: 0,
-    },
-    }}
+    <Stack.Screen
+      name="Mis reportes"
+      component={MyPostScreen}
+      options={{
+        headerTitleAlign: 'center',
+        headerTitleStyle: {
+          color: '#EEEEEE',
+          fontFamily: 'Kufam-SemiBoldItalic',
+          fontSize: 18,
+        },
+        headerStyle: {
+          backgroundColor: '#303841',
+          shadowColor: '#ffffff',
+          elevation: 0,
+        },
+      }}
     />
     <Stack.Screen
       name="Mis Post"
@@ -121,12 +124,12 @@ const MyPostStack = ({navigation}) => (
           color: '#EEEEEE',
           fontFamily: 'Kufam-SemiBoldItalic',
           fontSize: 18,
-      },
+        },
         headerStyle: {
           backgroundColor: '#303841',
           shadowColor: '#ffffff',
           elevation: 0,
-      },
+        },
       }}
       // options={({route}) => ({
       //   // title: route.params.userName,
@@ -139,34 +142,44 @@ const MyPostStack = ({navigation}) => (
 const ProfileStack = ({navigation}) => (
   <Stack.Navigator>
     <Stack.Screen
-      name="Profile"
+      name="Perfil"
       component={ProfileScreen}
       options={{
         headerTitleAlign: 'center',
         headerTitleStyle: {
-          color: '#EA9215',
+          color: '#FFFFFF',
           fontFamily: 'Kufam-SemiBoldItalic',
           fontSize: 18,
-      },
+        },
         headerStyle: {
           backgroundColor: '#303841',
           shadowColor: '#ffffff',
           elevation: 0,
-      },
+        },
       }}
     />
     <Stack.Screen
       name="EditProfile"
       component={EditProfileScreen}
       options={{
-        headerTitle: 'Edit Profile',
+        headerTitle: 'Editar Perfil',
         headerBackTitleVisible: false,
         headerTitleAlign: 'center',
+        headerTitleStyle: {
+          color: '#FFFFFF',
+          fontFamily: 'Kufam-SemiBoldItalic',
+          fontSize: 18,
+        },
         headerStyle: {
-          backgroundColor: '#fff',
-          shadowColor: '#fff',
+          backgroundColor: '#303841',
+          shadowColor: '#FFFFFF',
           elevation: 0,
         },
+        headerBackImage: () => (
+          <View style={{marginLeft: 15}}>
+            <AntDesign name="leftcircleo" size={25} color="#FFFFFF" />
+          </View>
+        ),
       }}
     />
   </Stack.Navigator>
@@ -176,12 +189,15 @@ const ProfileStack = ({navigation}) => (
 const AppStack = () => {
   return (
     <Tab.Navigator
-    screenOptions={{
+      screenOptions={{
         tabBarActiveTintColor: '#EA9215',
         tabBarInactiveTintColor: '#EEEEEE',
         tabBarStyle: {
           backgroundColor: '#303841',
-        }
+          // shadowColor: '#EA9215',
+          // elevation: 5,
+        },
+        // 
       }}>
       <Tab.Screen
         name="Salamanca"
@@ -222,10 +238,8 @@ const AppStack = () => {
           ),
         }}
       />
-      
     </Tab.Navigator>
   );
 };
-
 
 export default AppStack;

@@ -4,6 +4,7 @@ import React, { useContext, useState } from 'react';
 import { ActivityIndicator, Alert, StyleSheet, Text, View } from 'react-native';
 import ActionButton from 'react-native-action-button';
 import ImagePicker from 'react-native-image-crop-picker';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { AuthContext } from '../navigation/AuthProvider';
 import {
@@ -65,11 +66,12 @@ const AddPostScreen = () => {
         estatus: 0,
         respReporte: "0",
         repTime: firestore.Timestamp.fromDate(new Date()),
+        // fechaSub: 'YYYY/MM/DD'
       })
       .then(() => {
         console.log('Reporte subido!');
         Alert.alert(
-          'Tu reporte ha sido recivido',
+          'Tu reporte ha sido recibido',
           'Tu reporte esta en revisión. Gracias por hacer de Salamanca Gto. una mejor ciudad! 😁',
         );
         setCalle(null);
@@ -163,7 +165,7 @@ const AddPostScreen = () => {
             <ActivityIndicator size="large" color="#EA9215" />
           </StatusWrapper>
         ) : (
-          <SubmitBtn onPress={submitPost}>
+          <SubmitBtn onPress={submitPost} >
             <SubmitBtnText> Reportar </SubmitBtnText>
           </SubmitBtn>
         )}
@@ -189,16 +191,22 @@ const AddPostScreen = () => {
           <Icon name="md-done-all" style={styles.actionButtonIcon} />
         </ActionButton.Item>
       </ActionButton> */}
-      <ActionButton buttonColor="rgb(234, 146, 21)">
+
+      <ActionButton buttonColor="rgb(234, 146, 21)" 
+      ///icon={<Icon name="md-cut" style={styles.actionButtonIcon} />}
+
+      renderIcon={active => active ? (<MaterialCommunityIcons
+        name="camera-plus" style={styles.actionButtonIcon} /> ) : (<MaterialCommunityIcons
+          name="camera-plus-outline" style={styles.actionButtonIcon} />)}>
         <ActionButton.Item
           buttonColor="#3A4750"
           title="Tomar foto"
           onPress={takePhotoFromCamera}>
-          <MaterialIcons name="add-a-photo" style={styles.actionButtonIcon} />
+          <MaterialCommunityIcons name="camera" style={styles.actionButtonIcon} />
         </ActionButton.Item>
         <ActionButton.Item
           buttonColor="#3A4750"
-          title="Elegir foto"
+          title="Elegir foto de galería"
           onPress={choosePhotoFromLibrary}>
           <MaterialIcons
             name="add-photo-alternate"

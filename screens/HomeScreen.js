@@ -19,14 +19,14 @@ const HomeScreen = () => {
 
       await firestore()
         .collection('reportes')
-        // .where('estatus', '!=', 0)
+        .where('estatus', '==', 3)
         .orderBy('repTime', 'desc')
         .get()
         .then(querySnapshot => {
           // console.log('Total Reportes: ', querySnapshot.size);
 
           querySnapshot.forEach(doc => {
-            const {userId, reporte, calle, colonia, repImg, repTime, respReporte} =
+            const {userId, reporte, calle, colonia, repImg, repTime, respReporte, estatus} =
               doc.data();
             list.push({
               id: doc.id,
@@ -40,6 +40,7 @@ const HomeScreen = () => {
               colonia,
               postImg: repImg,
               respReporte,
+              estatus
               // Alumbrado y Limpia
             });
           });
