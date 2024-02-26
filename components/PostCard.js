@@ -9,10 +9,11 @@ import {
   PostText,
   PostTextRes,
   PostTime,
+  TxtRespReporte,
   UserImg,
   UserInfo,
   UserInfoText,
-  UserName,
+  UserName
 } from '../styles/FeedStyles';
 import ProgressiveImage from './ProgressiveImage';
 
@@ -69,13 +70,14 @@ const PostCard = ({item, onDelete}) => {
         resizeMode="cover"
       />
 
-      {item.respReporte != '0' ? <DividerResp /> : null}
-      {item.respReporte != '0' ? (
-        <PostTextRes>Reporte atendido: </PostTextRes>
-      ) : null}
-      {item.respReporte != '0' ? (
-        <PostImgResp source={{uri: item.respReporte}} />
-      ) : null}
+      {item.respReporte != '0' && (
+        <>
+          <DividerResp />
+          <TxtRespReporte><PostTextRes style={{color: 'white'}}>Reporte atendido por:{"\n"}{item.atendidoPor}</PostTextRes></TxtRespReporte>
+          <PostImgResp source={{uri: item.respReporte}} />
+        </>
+      )}
+      
     </Card>
   );
 };

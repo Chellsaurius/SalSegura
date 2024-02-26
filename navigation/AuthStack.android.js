@@ -5,7 +5,7 @@ import LoginScreen from '../screens/LoginScreen';
 import SignupScreen from '../screens/SignupScreen';
 import SliderScreeen from '../screens/SliderScreen';
 
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import AntDesing from 'react-native-vector-icons/AntDesign';
 
 // import {NavigationContainer} from '@react-navigation/native';
 
@@ -64,8 +64,8 @@ const AuthStack = () => {
           },
           headerLeft: () => (
             <View style={{marginLeft: 10}}>
-              <FontAwesome.Button 
-                name="long-arrow-left"
+              <AntDesing.Button 
+                name="left"
                 size={25}
                 backgroundColor="#f9fafd"
                 color="#333333"

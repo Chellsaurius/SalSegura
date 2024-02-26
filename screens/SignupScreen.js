@@ -1,5 +1,13 @@
 import React, { useContext, useState } from 'react';
-import { Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {
+  Alert,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import FormButton from '../components/FormButton';
 import FormInput from '../components/FormInput';
 import SocialButton from '../components/SocialButton';
@@ -14,58 +22,86 @@ const SignupScreen = ({navigation}) => {
   const {login, googleLogin, fbLogin} = useContext(AuthContext);
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Crear una cuenta</Text>
+    <ScrollView>
+      <View style={styles.container}>
+        <Text style={styles.text}>Crear una cuenta</Text>
 
-      <FormInput
-        labelValue={email}
-        onChangeText={userEmail => setEmail(userEmail)}
-        placeholderText="Correo"
-        iconType="user"
-        keyboardType="email-address"
-        autoCapitalize="none"
-        autoCorrect={false}
-      />
+        <FormInput
+          labelValue={email}
+          onChangeText={userEmail => setEmail(userEmail)}
+          placeholderText="Correo"
+          iconType="user"
+          keyboardType="email-address"
+          autoCapitalize="none"
+          autoCorrect={false}
+          required
+        />
 
-      <FormInput
-        labelValue={password}
-        onChangeText={userPassword => setPassword(userPassword)}
-        placeholderText="Contraseña"
-        iconType="lock"
-        secureTextEntry={true}
-      />
+        <FormInput
+          labelValue={password}
+          onChangeText={userPassword => setPassword(userPassword)}
+          placeholderText="Contraseña"
+          iconType="lock"
+          secureTextEntry={true}
+          required
+        />
 
-      <FormInput
-        labelValue={confirmPassword}
-        onChangeText={userPassword => setConfirmPassword(userPassword)}
-        placeholderText="Confirmar contraseña"
-        iconType="lock"
-        secureTextEntry={true}
-      />
+        <FormInput
+          labelValue={confirmPassword}
+          onChangeText={userPassword => setConfirmPassword(userPassword)}
+          placeholderText="Confirmar contraseña"
+          iconType="lock"
+          secureTextEntry={true}
+          required
+        />
 
-      <FormButton
-        buttonTitle="Iniciar Sesión"
-        onPress={() => register(email, password)}
-      />
+        <FormButton
+          buttonTitle="Iniciar Sesión"
+          onPress={() => {
+            if (email && password && confirmPassword) {
+              if (password.length >= 6) {
+                if (password === confirmPassword) {
+                  register(email, password);
+                } else {
+                  Alert.alert(
+                    'Las contraseñas no coinciden',
+                    'Las contraseñas deben coincidir.',
+                  );
+                }
+              } else {
+                Alert.alert(
+                  'Faltan datos',
+                  'La contraseña debe contener al menos 6 caracteres',
+                );
+              }
+            } else {
+              Alert.alert(
+                'No ingreso datos',
+                'Por favor complete todos los campos requeridos.',
+              );
+            }
+          }}
+          // register(email, password)}
+        />
 
-      <View style={styles.textPrivate}>
-        <Text style={styles.color_textPrivate}>
-          Al registrarse, confirma que acepta nuestros{' '}
-        </Text>
-        <TouchableOpacity onPress={() => alert('Terms Clicked!')}>
-          <Text style={[styles.color_textPrivate, {color: '#e88832'}]}>
-            Terminos de servicio
+        <View style={styles.textPrivate}>
+          <Text style={styles.color_textPrivate}>
+            Al registrarse, confirma que acepta nuestros{' '}
           </Text>
-        </TouchableOpacity>
-        <Text style={styles.color_textPrivate}> y </Text>
-        <Text style={[styles.color_textPrivate, {color: '#e88832'}]}>
-          Política de privacidad
-        </Text>
-      </View>
+          <TouchableOpacity onPress={() => alert('Terms Clicked!')}>
+            <Text style={[styles.color_textPrivate, {color: '#e88832'}]}>
+              Terminos de servicio
+            </Text>
+          </TouchableOpacity>
+          <Text style={styles.color_textPrivate}> y </Text>
+          <Text style={[styles.color_textPrivate, {color: '#e88832'}]}>
+            Política de privacidad
+          </Text>
+        </View>
 
-      {Platform.OS === 'android' ? (
-        <View>
-          {/* <SocialButton
+        {Platform.OS === 'android' ? (
+          <View>
+            {/* <SocialButton
             buttonTitle="Sign Up with Facebook"
             btnType="facebook"
             color="#4867aa"
@@ -73,22 +109,25 @@ const SignupScreen = ({navigation}) => {
             onPress={() => fbLogin()}
           /> */}
 
-          <SocialButton
-            buttonTitle="Sign Up with Google"
-            btnType="google"
-            color="#de4d41"
-            backgroundColor="#f5e7ea"
-            onPress={() => googleLogin()}
-          />
-        </View>
-      ) : null}
+            <SocialButton
+              buttonTitle="Iniciar Sesión con Google"
+              btnType="google"
+              color="#de4d41"
+              backgroundColor="#f5e7ea"
+              onPress={() => googleLogin()}
+            />
+          </View>
+        ) : null}
 
-      <TouchableOpacity
-        style={styles.navButton}
-        onPress={() => navigation.navigate('Login')}>
-        <Text style={styles.navButtonText}>¿Tienes una cuenta? Iniciar sesión</Text>
-      </TouchableOpacity>
-    </View>
+        <TouchableOpacity
+          style={styles.navButton}
+          onPress={() => navigation.navigate('Login')}>
+          <Text style={styles.navButtonText}>
+            ¿Tienes una cuenta? Iniciar sesión
+          </Text>
+        </TouchableOpacity>
+      </View>
+    </ScrollView>
   );
 };
 
@@ -116,6 +155,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     color: '#2e64e5',
     fontFamily: 'Lato-Regular',
+    marginTop: '5%',
   },
   textPrivate: {
     flexDirection: 'row',

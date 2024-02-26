@@ -1,6 +1,6 @@
 import React from 'react';
-import {View, TextInput, StyleSheet} from 'react-native';
-import {windowHeight, windowWidth} from '../utils/Dimentions';
+import { StyleSheet, TextInput, View } from 'react-native';
+import { windowHeight, windowWidth } from '../utils/Dimentions';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#fff',
+    borderRadius: 20,
   },
   iconStyle: {
     padding: 10,

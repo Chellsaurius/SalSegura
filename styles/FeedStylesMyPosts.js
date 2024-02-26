@@ -1,15 +1,15 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 // styled.View``;
 export const Container = styled.View`
   flex: 1;
   justify-content: center;
   align-items: center;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   padding: 20px;
 `;
 
 export const Card = styled.View`
-  background-color: #EEEEEE;
+  background-color: #eeeeee;
   width: 100%;
   margin-bottom: 10%;
   border-radius: 20px;
@@ -43,7 +43,7 @@ export const UserName = styled.Text`
 export const PostTime = styled.Text`
   font-size: 12px;
   font-family: 'Courier New';
-  color: #EA9215;
+  color: #ea9215;
 `;
 
 export const PostText = styled.Text`
@@ -80,42 +80,43 @@ export const TxtRespReporte = styled.View`
 `;
 
 export const Divider = styled.View`
-  border-bottom-color: #DDDDDD;
+  border-bottom-color: #dddddd;
   border-bottom-width: 1px;
   width: 92%;
   align-self: center;
 `;
 
 export const DividerResp = styled.View`
-  border-bottom-color: #61677A;
+  border-bottom-color: #61677a;
   border-bottom-width: 1px;
   width: 92%;
   align-self: center;
   height: 2px;
   margin: 5px 10px 0px 0px;
-  
 `;
 
-export const BtnStatus = styled.TouchableOpacity`
+export const BtnStatus = styled.View`
   border-radius: 15px;
   justify-content: center;
   margin-left: 50%;
+  margin-right: 5%;
   width: 40%;
-  height: 7%;
   margin-bottom: 5%;
   align-items: center;
   align-self: center;
-  
 `;
 
 export const TxtStatus = styled.Text`
   font-size: 14px;
   font-family: 'Courier New';
-  color: black;
-  text-align: center;
+  /* text-align: center;
   justify-content: center;
-  align-content: center;
-  
+  align-content: center; */
+  color: white;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-bottom: 10px;
+  /* padding-top: 10px; */
 `;
 
 export const PostImg = styled.Image`
@@ -123,7 +124,6 @@ export const PostImg = styled.Image`
   height: 250px;
   margin-top: 5px;
   border-radius: 20px;
-  
 `;
 
 export const PostImgResp = styled.Image`
@@ -132,21 +132,20 @@ export const PostImgResp = styled.Image`
   margin-top: 5px;
   border-radius: 20px;
   /* margin-bottom: 10px; */
-
 `;
 
 export const InteractionWrapper = styled.View`
-    flex-direction: row;
-    justify-content: space-around;
-    padding: 15px;
+  flex-direction: row;
+  justify-content: space-around;
+  padding: 15px;
 `;
 
 export const Interaction = styled.TouchableOpacity`
-    flex-direction: row;
-    justify-content: center;
-    border-radius: 5px;
-    padding: 2px 5px;
-    background-color: ${props => props.active ? '#000000' : 'transparent'}
+  flex-direction: row;
+  justify-content: center;
+  border-radius: 5px;
+  padding: 2px 5px;
+  background-color: ${props => (props.active ? '#000000' : 'transparent')};
 `;
 
 /* export const InteractionText = styled.Text`

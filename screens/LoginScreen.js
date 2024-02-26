@@ -1,11 +1,13 @@
 import React, { useContext, useState } from 'react';
 import {
+  Alert,
   Image,
   Platform,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
 import FormButton from '../components/FormButton';
 import FormInput from '../components/FormInput';
@@ -15,55 +17,74 @@ import { AuthContext } from '../navigation/AuthProvider';
 const LoginScreen = ({navigation}) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  // const [confirmPassword, setConfirmPassword] = useState();
 
   const {login, googleLogin, fbLogin} = useContext(AuthContext);
 
   return (
-    <View style={styles.container}>
-      <Image
-        source={require('../assets/img/salamanca.png')}
-        style={styles.logo}
-      />
-      <Text style={styles.text}>Salamanca Segura</Text>
-      
-      <FormInput
-        labelValue={email}
-        onChangeText={userEmail => setEmail(userEmail)}
-        placeholderText="Correo"
-        iconType="user"
-        keyboardType="email-address"
-        autoCapitalize="none"
-        autoCorrect={false}
-        required
-      />
-      <FormInput
-        labelValue={password}
-        onChangeText={userPassword => setPassword(userPassword)}
-        placeholderText="Contraseña"
-        iconType="lock"
-        secureTextEntry={true}
-        required
-      />
+    <ScrollView>
+      <View style={styles.container}>
+        <Image
+          source={require('../assets/img/salamanca.png')}
+          style={styles.logo}
+        />
+        <Text style={styles.text}>Salamanca Segura</Text>
 
-      <FormButton 
-        buttonTitle="Entrar" 
-        onPress={() => {
+        <FormInput
+          labelValue={email}
+          onChangeText={userEmail => setEmail(userEmail)}
+          placeholderText="Correo"
+          iconType="user"
+          keyboardType="email-address"
+          autoCapitalize="none"
+          autoCorrect={false}
+          required
+        />
+        <FormInput
+          labelValue={password}
+          onChangeText={userPassword => setPassword(userPassword)}
+          placeholderText="Contraseña"
+          iconType="lock"
+          secureTextEntry={true}
+          required
+        />
+
+        {/* <FormInput
+          labelValue={confirmPassword}
+          onChangeText={userPassword => setConfirmPassword(userPassword)}
+          placeholderText="Confirmar contraseña"
+          iconType="lock"
+          secureTextEntry={true}
+          required
+        /> */}
+
+        <FormButton
+          buttonTitle="Entrar"
+          onPress={() => {
             if (email && password) {
-              login(email, password);
+              // if (password === confirmPassword) {
+                login(email, password);
+              // } else {
+              //   Alert.alert(
+              //     'Contraseña incorrecta',
+              //     'Por favor introduce la contraseña correcta.',
+              //   );
+              // }
             } else {
-              alert('Por favor complete todos los campos requeridos.');
+              Alert.alert(
+                'Faltan campos',
+                'Por favor complete todos los campos requeridos.',
+              );
             }
-        }} 
-      />
-      <TouchableOpacity style={styles.forgotButton} onPress={() => {}}>
-        <Text style={styles.navButtonText}>
-          Olvidaste tu contraseña
-        </Text>
-      </TouchableOpacity>
-      
-      {Platform.OS === 'android' ? (
-        <View>
-          {/* <SocialButton
+          }}
+        />
+        <TouchableOpacity style={styles.forgotButton} onPress={() => {}}>
+          <Text style={styles.navButtonText}>Olvidaste tu contraseña</Text>
+        </TouchableOpacity>
+
+        {Platform.OS === 'android' ? (
+          <View>
+            {/* <SocialButton
             buttonTitle="Sign In with Facebook"
             btnType="facebook"
             color="#4867aa"
@@ -71,22 +92,25 @@ const LoginScreen = ({navigation}) => {
             onPress={() => fbLogin()}
           /> */}
 
-          <SocialButton
-            buttonTitle="Sign In with Google"
-            btnType="google"
-            color="#de4d41"
-            backgroundColor="#f5e7ea"
-            onPress={() => googleLogin()}
-          />
-        </View>
-      ) : null}
+            <SocialButton
+              buttonTitle="Iniciar Sesión con Google"
+              btnType="google"
+              color="#de4d41"
+              backgroundColor="#f5e7ea"
+              onPress={() => googleLogin()}
+            />
+          </View>
+        ) : null}
 
-      <TouchableOpacity style={styles.forgotButton} onPress={() => navigation.navigate('Signup')}>
-        <Text style={styles.navButtonText}>
-          No tienes cuenta. Registrate aquí.
-        </Text>
-      </TouchableOpacity>
-    </View>
+        <TouchableOpacity
+          style={styles.forgotButton}
+          onPress={() => navigation.navigate('Signup')}>
+          <Text style={styles.navButtonText}>
+            No tienes cuenta. Registrate aquí.
+          </Text>
+        </TouchableOpacity>
+      </View>
+    </ScrollView>
   );
 };
 export default LoginScreen;
@@ -123,5 +147,4 @@ const styles = StyleSheet.create({
     color: '#2e64e5',
     fontFamily: 'Lato-Regular',
   },
-  
 });

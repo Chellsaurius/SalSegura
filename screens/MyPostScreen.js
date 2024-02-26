@@ -1,115 +1,14 @@
-// import React from 'react';
-// import { ScrollView, StyleSheet, View } from 'react-native';
-// import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
-
-// const MyPostScreen = () => {
-//   return (
-//     <ScrollView
-//       style={{flex: 1}}
-//       contentContainerStyle={{alignItems: 'center'}}>
-//       <SkeletonPlaceholder>
-//         <View
-//           style={{flexDirection: 'row', alignItems: 'center', marginTop: 30}}>
-//           <View style={{width: 60, height: 60, borderRadius: 50}} />
-//           <View style={{marginLeft: 20}}>
-//             <View style={{width: 120, height: 20, borderRadius: 4}} />
-//             <View
-//               style={{marginTop: 6, width: 80, height: 20, borderRadius: 4}}
-//             />
-//           </View>
-//         </View>
-//         <View style={{marginTop: 10, marginBottom: 30}}>
-//           <View
-//             style={{marginTop: 6, width: 250, height: 20, borderRadius: 4}}
-//           />
-//           <View
-//             style={{marginTop: 6, width: 250, height: 20, borderRadius: 4}}
-//           />
-//           <View
-//             style={{marginTop: 6, width: 300, height: 20, borderRadius: 4}}
-//           />
-//           <View
-//             style={{marginTop: 6, width: 350, height: 250, borderRadius: 4}}
-//           />
-//         </View>
-//       </SkeletonPlaceholder>
-//       <SkeletonPlaceholder>
-//         <View
-//           style={{flexDirection: 'row', alignItems: 'center', marginTop: 30}}>
-//           <View style={{width: 60, height: 60, borderRadius: 50}} />
-//           <View style={{marginLeft: 20}}>
-//             <View style={{width: 120, height: 20, borderRadius: 4}} />
-//             <View
-//               style={{marginTop: 6, width: 80, height: 20, borderRadius: 4}}
-//             />
-//           </View>
-//         </View>
-//         <View style={{marginTop: 10, marginBottom: 30}}>
-//           <View
-//             style={{marginTop: 6, width: 250, height: 20, borderRadius: 4}}
-//           />
-//           <View
-//             style={{marginTop: 6, width: 250, height: 20, borderRadius: 4}}
-//           />
-//           <View
-//             style={{marginTop: 6, width: 300, height: 20, borderRadius: 4}}
-//           />
-//           <View
-//             style={{marginTop: 6, width: 350, height: 250, borderRadius: 4}}
-//           />
-//         </View>
-//       </SkeletonPlaceholder>
-
-//       {/* <SkeletonPlaceholder borderRadius={4}>
-//           <View style={{flexDirection: 'row', alignItems: 'center'}}>
-//             <View style={{width: 60, height: 60, borderRadius: 50}} />
-//             <View style={{marginLeft: 20}}>
-//               <Image
-//                 style={{width: 120, height: 20}}
-//                 source={require('../assets/users/user-1.jpg')}
-//               />
-//               <Text style={{marginTop: 6, fontSize: 14, lineHeight: 18}}>
-//                 Hello world
-//               </Text>
-//             </View>
-//           </View>
-//           <View>
-//             <View style={{width: 300, height: 20, borderRadius: 4}} />
-//           </View>
-//         </SkeletonPlaceholder> */}
-//     </ScrollView>
-//   );
-// };
-
-// export default MyPostScreen;
-
-// const styles = StyleSheet.create({
-//   container: {
-//     // backgroundColor: '#EEEEEE',
-//     flex: 1,
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//     // padding: 20,
-//   },
-//   // text: {
-//   //   fontSize: 20,
-//   //   color: '#000000',
-//   // },
-// });
-
 import React, { useContext, useEffect, useState } from 'react';
-import { Alert, FlatList, SafeAreaView, ScrollView, View } from 'react-native';
-import PostCardUser from '../components/PostCardUser';
-import { Container } from '../styles/FeedStyles';
+import { Alert, SafeAreaView, ScrollView, StyleSheet } from 'react-native';
 
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
 
-import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
+import PostCardUser from '../components/PostCardUser';
 import { AuthContext } from '../navigation/AuthProvider';
 
 const MyPostScreen = () => {
-  const [reportes, setReportes] = useState(null);
+  const [reportes, setReportes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [deleted, setDeleted] = useState(false);
   const {user, logout} = useContext(AuthContext);
@@ -127,8 +26,17 @@ const MyPostScreen = () => {
           // console.log('Total Reportes: ', querySnapshot.size);
 
           querySnapshot.forEach(doc => {
-            const {userId, reporte, calle, colonia, repImg, repTime, respReporte, estatus} =
-              doc.data();
+            const {
+              userId,
+              reporte,
+              calle,
+              colonia,
+              repImg,
+              repTime,
+              respReporte,
+              estatus,
+              atendidoPor,
+            } = doc.data();
             list.push({
               id: doc.id,
               userId,
@@ -141,7 +49,8 @@ const MyPostScreen = () => {
               colonia,
               postImg: repImg,
               respReporte,
-              estatus
+              estatus,
+              atendidoPor,
               // Alumbrado y Limpia
             });
           });
@@ -168,25 +77,25 @@ const MyPostScreen = () => {
     setDeleted(false);
   }, [deleted]);
 
-  // Modal de confirmación para eliminar un reporte 
-  const handleDelete = (reporteId) => {
+  // Modal de confirmación para eliminar un reporte
+  const handleDelete = reporteId => {
     Alert.alert(
-      'Eliminar reporte', 
+      'Eliminar reporte',
       '¿Estás seguro de eliminar tu reporte?',
       [
         {
-          text: 'Cancel',
+          text: 'Cancelar',
           onPress: () => console.log('Se presiono cancelar!'),
-          style: 'cancel'
+          style: 'cancel',
         },
         {
           text: 'Confirmar',
           onPress: () => deleteReporte(reporteId),
         },
       ],
-      { cancelable: false }
+      {cancelable: false},
     );
-  }
+  };
 
   const deleteReporte = reporteId => {
     console.log('Actual Reporte Id: ', reporteId);
@@ -200,8 +109,8 @@ const MyPostScreen = () => {
         if (documentSnapshot.exists) {
           const {repImg} = documentSnapshot.data();
 
-          // Si la imagen de publicación no es nula la eliminamos 
-          
+          // Si la imagen de publicación no es nula la eliminamos
+
           if (repImg != null) {
             const storageRef = storage().refFromURL(repImg);
             const imageRef = storage().ref(storageRef.fullPath);
@@ -216,7 +125,7 @@ const MyPostScreen = () => {
               .catch(e => {
                 console.log('Error al borrar la imagen. ', e);
               });
-              // De lo contrario, si la img de la publicación es nula entoces que elimine solo el texto
+            // De lo contrario, si la img de la publicación es nula entoces que elimine solo el texto
           } else {
             deleteFirestoreData(reporteId);
           }
@@ -243,81 +152,106 @@ const MyPostScreen = () => {
   };
 
   return (
-    <SafeAreaView style={{flex:1}}>
-      {loading ? (
-      <ScrollView
-      style={{flex: 1}}
-      contentContainerStyle={{alignItems: 'center'}}>
-      <SkeletonPlaceholder>
-        <View
-          style={{flexDirection: 'row', alignItems: 'center', marginTop: 30}}>
-          <View style={{width: 60, height: 60, borderRadius: 50}} />
-          <View style={{marginLeft: 20}}>
-            <View style={{width: 120, height: 20, borderRadius: 4}} />
-            <View
-              style={{marginTop: 6, width: 80, height: 20, borderRadius: 4}}
-            />
-          </View>
-        </View>
-        <View style={{marginTop: 10, marginBottom: 30}}>
-          <View
-            style={{marginTop: 6, width: 250, height: 20, borderRadius: 4}}
-          />
-          <View
-            style={{marginTop: 6, width: 250, height: 20, borderRadius: 4}}
-          />
-          <View
-            style={{marginTop: 6, width: 300, height: 20, borderRadius: 4}}
-          />
-          <View
-            style={{marginTop: 6, width: 350, height: 250, borderRadius: 4}}
-          />
-        </View>
-      </SkeletonPlaceholder>
-      <SkeletonPlaceholder>
-        <View
-          style={{flexDirection: 'row', alignItems: 'center', marginTop: 30}}>
-          <View style={{width: 60, height: 60, borderRadius: 50}} />
-          <View style={{marginLeft: 20}}>
-            <View style={{width: 120, height: 20, borderRadius: 4}} />
-            <View
-              style={{marginTop: 6, width: 80, height: 20, borderRadius: 4}}
-            />
-          </View>
-        </View>
-        <View style={{marginTop: 10, marginBottom: 30}}>
-          <View
-            style={{marginTop: 6, width: 250, height: 20, borderRadius: 4}}
-          />
-          <View
-            style={{marginTop: 6, width: 250, height: 20, borderRadius: 4}}
-          />
-          <View
-            style={{marginTop: 6, width: 300, height: 20, borderRadius: 4}}
-          />
-          <View
-            style={{marginTop: 6, width: 350, height: 250, borderRadius: 4}}
-          />
-        </View>
-      </SkeletonPlaceholder>
-      </ScrollView>
-    ) : (
-      <Container>
-        <FlatList
-          data={reportes}
-          renderItem={({item}) => (
-            <PostCardUser item={item} onDelete={handleDelete} />
-          )}
-          keyExtractor={item => item.id}
-          ListHeaderComponent={ListHeader}
-          ListFooterComponent={ListHeader}
+    <SafeAreaView style={{flex: 1}}>
+      {/* {loading ? ( */}
+        <ScrollView
+          style={styles.container}
+          contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}
           showsVerticalScrollIndicator={false}
-        />
-      </Container>
-    )}
+          >
+          {/* <SkeletonPlaceholder>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginTop: 30,
+              }}>
+              <View style={{width: 60, height: 60, borderRadius: 50}} />
+              <View style={{marginLeft: 20}}>
+                <View style={{width: 120, height: 20, borderRadius: 4}} />
+                <View
+                  style={{marginTop: 6, width: 80, height: 20, borderRadius: 4}}
+                />
+              </View>
+            </View>
+            <View style={{marginTop: 10, marginBottom: 30}}>
+              <View
+                style={{marginTop: 6, width: 250, height: 20, borderRadius: 4}}
+              />
+              <View
+                style={{marginTop: 6, width: 250, height: 20, borderRadius: 4}}
+              />
+              <View
+                style={{marginTop: 6, width: 300, height: 20, borderRadius: 4}}
+              />
+              <View
+                style={{marginTop: 6, width: 350, height: 250, borderRadius: 4}}
+              />
+            </View>
+          </SkeletonPlaceholder>
+          <SkeletonPlaceholder>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginTop: 30,
+              }}>
+              <View style={{width: 60, height: 60, borderRadius: 50}} />
+              <View style={{marginLeft: 20}}>
+                <View style={{width: 120, height: 20, borderRadius: 4}} />
+                <View
+                  style={{marginTop: 6, width: 80, height: 20, borderRadius: 4}}
+                />
+              </View>
+            </View>
+            <View style={{marginTop: 10, marginBottom: 30}}>
+              <View
+                style={{marginTop: 6, width: 250, height: 20, borderRadius: 4}}
+              />
+              <View
+                style={{marginTop: 6, width: 250, height: 20, borderRadius: 4}}
+              />
+              <View
+                style={{marginTop: 6, width: 300, height: 20, borderRadius: 4}}
+              />
+              <View
+                style={{marginTop: 6, width: 350, height: 250, borderRadius: 4}}
+              />
+            </View>
+          </SkeletonPlaceholder> */}
+          
+          
+
+          {reportes.map((item) => (
+            <PostCardUser key={item.id} item={item} onDelete={handleDelete} />
+          ))}
+
+        </ScrollView>
+      {/* // ) : (
+      //   <Container>
+      //     <FlatList
+      //       data={reportes}
+      //       renderItem={({item}) => (
+      //         <PostCardUser item={item} onDelete={handleDelete} />
+      //       )}
+      //       keyExtractor={item => item.id}
+      //       ListHeaderComponent={ListHeader}
+      //       ListFooterComponent={ListHeader}
+      //       showsVerticalScrollIndicator={false}
+      //     />
+      //   </Container>
+      // )} */}
     </SafeAreaView>
-    
   );
 };
 
 export default MyPostScreen;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    padding: 20,
+  },
+  
+});

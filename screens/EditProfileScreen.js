@@ -9,6 +9,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  ToastAndroid,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -133,6 +134,10 @@ const EditProfileScreen = () => {
       setImage(imageUri);
       setModalVisible(!modalVisible);
       // this.bs.current.snapTo(1); ------ Pero yo no uso esto, investigar para el MODAL / Lo que hace es que cuando se seleccione la imagen se quite la ventana de Animated ------------
+    }).catch(e => {
+      console.log(e);
+      // Alert.alert('Foto cancelada', 'Por favor inserta una foto.');
+      ToastAndroid.show('Foto cancelada!', ToastAndroid.SHORT);
     });
   };
 
@@ -148,6 +153,10 @@ const EditProfileScreen = () => {
       setImage(imageUri);
       setModalVisible(!modalVisible);
       // this.bs.current.snapTo(1); ------ Pero yo no uso esto, investigar para el MODAL ------------
+    }).catch(e => {
+      console.log(e);
+      // Alert.alert('Foto cancelada', 'Por favor inserta una foto.');
+      ToastAndroid.show('Imagen cancelada!', ToastAndroid.SHORT);
     });
   };
 

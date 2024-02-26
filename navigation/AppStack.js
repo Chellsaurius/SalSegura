@@ -54,7 +54,7 @@ const FeedStack = ({navigation}) => (
       name="AddPost"
       component={AddPostScreen}
       options={{
-        title: 'Generar reporte',
+        title: 'Nuevo reporte',
         headerTitleAlign: 'center',
         headerTitleStyle: {
           color: '#EEEEEE',

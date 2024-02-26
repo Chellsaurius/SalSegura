@@ -1,22 +1,22 @@
 import firestore from '@react-native-firebase/firestore';
 import { useContext, useEffect, useState } from 'react';
 import {
+  Alert,
   Image,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { AuthContext } from '../navigation/AuthProvider';
 
-
 const ProfileScreen = ({navigation}) => {
-  const {user, logout} = useContext(AuthContext);
+  const {user, logout, isGoogleAuthenticated} = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
   const [userData, setUserData] = useState(null);
-  
+
   const getUser = async () => {
     await firestore()
       .collection('users')
@@ -32,24 +32,50 @@ const ProfileScreen = ({navigation}) => {
 
   useEffect(() => {
     getUser();
-    navigation.addListener("focus", () => setLoading (!loading))
+    navigation.addListener('focus', () => setLoading(!loading));
   }, [navigation, loading]);
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#3A4750'}}>
-      <ScrollView 
+      <ScrollView
         style={styles.container}
         contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}
-        showsVerticalScrollIndicator={false}
-      >
-        <Image style={styles.userImg} source={{uri: userData ? userData.userImg : 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'}} />
-        <Text style={styles.userName} >{userData ? userData.fname : 'Test'} {userData ? userData.lname : 'User'}</Text>
+        showsVerticalScrollIndicator={false}>
+        <Image
+          style={styles.userImg}
+          source={{
+            uri: userData
+              ? userData.userImg
+              : 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+          }}
+        />
+        <Text style={styles.userName}>
+          {userData ? userData.fname : 'Test'}{' '}
+          {userData ? userData.lname : 'User'}
+        </Text>
         {/* <Text  >{user.uid}{"\n"}</Text> */}
         {/* <Text style={styles.aboutUser} >Hello my name is Jenny Doe and i am software deveper and 23 years old</Text> */}
         <View style={styles.userBtnWrapper}>
-          <TouchableOpacity style={styles.userBtn} onPress={() => {navigation.navigate('EditProfile')}}>
+          {isGoogleAuthenticated ? (
+          <TouchableOpacity
+            style={styles.userBtn}
+            onPress={() => {
+              Alert.alert(
+                'No puedes editar tu perfil',
+                'No puedes realizar esta acción, ya que te registraste con Google',
+              );
+            }}>
             <Text style={styles.userBtnTxt}>Editar Perfil</Text>
           </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              style={styles.userBtn}
+              onPress={() => {
+                navigation.navigate('EditProfile');
+              }}>
+              <Text style={styles.userBtnTxt}>Editar Perfil</Text>
+            </TouchableOpacity>
+          )}
           <TouchableOpacity style={styles.userBtn} onPress={() => logout()}>
             <Text style={styles.userBtnTxt}>Cerrar Sesión</Text>
           </TouchableOpacity>
@@ -71,15 +97,15 @@ const styles = StyleSheet.create({
   },
   userImg: {
     height: 150,
-    width: 150, 
+    width: 150,
     borderRadius: 75,
-  }, 
+  },
   userName: {
     fontSize: 18,
     fontWeight: 'bold',
     marginTop: 10,
     marginBottom: 10,
-    color: '#FFFFFF'
+    color: '#FFFFFF',
   },
   aboutUser: {
     fontSize: 12,
@@ -103,7 +129,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
   },
   userBtnTxt: {
-    color: '#FFFFFF'
+    color: '#FFFFFF',
   },
   userInfoWrapper: {
     flexDirection: 'row',
@@ -115,9 +141,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   userInfoTitle: {
-    fontSize: 20, 
+    fontSize: 20,
     fontWeight: 'bold',
-    marginBottom: 5, 
+    marginBottom: 5,
     textAlign: 'center',
   },
   userInfoSubTitle: {

@@ -17,10 +17,15 @@ const SocialButton = ({
       style={[styles.buttonContainer, {backgroundColor: bgColor}]}
       {...rest}>
       <View style={styles.iconwrapper}>
-        <FontAwesome name={btnType} style={styles.icon} size={22} color={color} />
+        <FontAwesome
+          name={btnType}
+          style={styles.icon}
+          size={22}
+          color={color}
+        />
       </View>
       <View style={styles.btnTxtWrapper}>
-        <Text styles={[styles.buttonText,{color:color}]}>{buttonTitle}</Text>
+        <Text style={[styles.buttonText, {color: color}]}>{buttonTitle}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -30,29 +35,29 @@ export default SocialButton;
 
 const styles = StyleSheet.create({
   buttonContainer: {
-    marginTop:10,
-    width:'100%',
-    height:windowHeight / 15,
+    marginTop: 10,
+    width: '100%',
+    height: windowHeight / 15,
     padding: 10,
-    flexDirection:'row',
-    borderRadius: 3,
+    flexDirection: 'row',
+    borderRadius: 20,
   },
   iconwrapper: {
     width: 30,
-    justifyContent:'center',
-    alignItems:'center',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   icon: {
-    fontWeight:'bold',
+    fontWeight: 'bold',
   },
   btnTxtWrapper: {
-    flex:1 ,
-    justifyContent:'center',
-    alignItems:'center',
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   buttonText: {
-    fontSize:18 ,
-    fontWeight:'bold ',
-    fontFamily:'Lato-Regular',
+    fontSize: 18,
+    fontWeight: 'bold',
+    fontFamily: 'Lato-Regular',
   },
 });

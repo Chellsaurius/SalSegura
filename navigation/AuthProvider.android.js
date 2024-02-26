@@ -2,7 +2,7 @@ import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import React, { createContext, useState } from 'react';
-import { Alert } from 'react-native';
+import { Alert, ToastAndroid } from 'react-native';
 import { AccessToken, LoginManager } from 'react-native-fbsdk';
 
 export const AuthContext = createContext();
@@ -24,8 +24,16 @@ export const AuthProvider = ({children}) => {
           // }
         }catch(e) {
           console.log(e);
-          Alert('Ha ocurrido un error');
-        }
+          if (e == 'Error: [auth/invalid-credential] The supplied auth credential is incorrect, malformed or has expired.') {
+            ToastAndroid.show('Usuario o contraseña incorrecta...!', ToastAndroid.SHORT);
+          } else if (e == 'Error: [auth/user-disabled] The user account has been disabled by an administrator.') {
+            ToastAndroid.show('Usuario inhabilitado ...!', ToastAndroid.SHORT);
+          } else if (e == 'Error: [auth/too-many-requests] We have blocked all requests from this device due to unusual activity. Try again later. [ Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later.') {
+            ToastAndroid.show('Usuario inhabilitado, intentalo más tarde.' +e , ToastAndroid.SHORT);
+          } else {
+            ToastAndroid.show('Usuario inhabilitado, intentalo más tarde.', ToastAndroid.SHORT);
+          }
+        };
       },
       googleLogin: async ()=> {
         try{
@@ -37,10 +45,13 @@ export const AuthProvider = ({children}) => {
           // Create a Google credential with the token
           const googleCredential = auth.GoogleAuthProvider.credential(idToken);
 
+          // console.log(idToken);
+
           // Sign-in the user with the credential
           await auth().signInWithCredential(googleCredential);
         } catch(error){
           console.log({error});
+          ToastAndroid.show('Usuario inhabilitado ...!', ToastAndroid.SHORT);
         }
       },
       fbLogin: async () => {
@@ -70,7 +81,7 @@ export const AuthProvider = ({children}) => {
       },
       register: async (email, password) => {
         try {
-          // if (password.length >= 6) {
+          if (password.length >= 6) {
             await auth().createUserWithEmailAndPassword(email, password)
             .then(() => {
               firestore().collection('users').doc(auth().currentUser.uid)
@@ -88,9 +99,9 @@ export const AuthProvider = ({children}) => {
             .catch(error => {
               console.log('Algo salió mal al registrarse: ', error);
             });
-          // }else{
-          //   Alert('La contraseña debe contener al menos 6 caracteres');
-          // }
+          }else{
+            Alert('La contraseña debe contener al menos 6 caracteres');
+          }
         }catch(e) {
           console.log(e)
           Alert('Ha ocurrido un error');

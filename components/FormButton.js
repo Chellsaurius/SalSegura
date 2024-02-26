@@ -18,10 +18,10 @@ const styles = StyleSheet.create({
     width: '100%',
     height: windowHeight / 15,
     backgroundColor: '#2e64e5',
-    padding: 10,
+    // padding: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 3,
+    borderRadius: 20,
   },
   buttonText: {
     fontSize: 18,
@@ -29,6 +29,9 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     fontFamily: 'Lato-Regular',
     alignSelf: 'center',
-    marginTop: 10,
+    // paddingLeft: 15,
+    // paddingRight: 15,
+    paddingBottom: 10,
+    paddingTop: 10,
   },
 });

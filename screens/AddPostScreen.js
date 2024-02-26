@@ -1,9 +1,11 @@
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
 import React, { useContext, useState } from 'react';
-import { ActivityIndicator, Alert, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Alert, StyleSheet, Text, ToastAndroid, View } from 'react-native';
 import ActionButton from 'react-native-action-button';
+import { ScrollView } from 'react-native-gesture-handler';
 import ImagePicker from 'react-native-image-crop-picker';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { AuthContext } from '../navigation/AuthProvider';
@@ -35,6 +37,10 @@ const AddPostScreen = () => {
       console.log(image);
       const imageUri = Platform.OS === 'ios' ? image.sourceURL : image.path;
       setImage(imageUri);
+    }).catch(e => {
+      console.log(e);
+      // Alert.alert('Foto cancelada', 'Por favor inserta una foto.');
+      ToastAndroid.show('Foto cancelada!', ToastAndroid.SHORT);
     });
   };
 
@@ -48,13 +54,17 @@ const AddPostScreen = () => {
       console.log(image);
       const imageUri = Platform.OS === 'ios' ? image.sourceURL : image.path;
       setImage(imageUri);
+    }).catch(e => {
+      console.log(e);
+      // Alert.alert('Imagen cancelada', 'Por favor inserta una imagen.');
+      ToastAndroid.show('Imagen cancelada!', ToastAndroid.SHORT);
     });
   };
 
   const submitPost = async () => {
     const imageUrl = await uploadImage();
     console.log('Url Imagen: ', imageUrl);
-    
+
     firestore()
       .collection('reportes')
       .add({
@@ -64,8 +74,9 @@ const AddPostScreen = () => {
         reporte: descripcion,
         repImg: imageUrl,
         estatus: 0,
-        respReporte: "0",
+        respReporte: '0',
         repTime: firestore.Timestamp.fromDate(new Date()),
+        atendidoPor: "null",
         // fechaSub: 'YYYY/MM/DD'
       })
       .then(() => {
@@ -78,10 +89,10 @@ const AddPostScreen = () => {
         setColonia(null);
         setDescripcion(null);
       })
-      .catch((error) => {
+      .catch(error => {
         console.log('Algo salió mal al subir el reporte', error);
       });
-  }
+  };
 
   const uploadImage = async () => {
     const uploadUri = image;
@@ -117,61 +128,97 @@ const AddPostScreen = () => {
 
       setUploading(false);
       setImage(null);
-      
+
       // Alert.alert(
       //   'Imagen cargada!',
       //   'Gracias por hacer de Salamanca Gto. una mejor ciudad!😁',
       // );
       return url;
-
     } catch (e) {
       console.log(e);
       return null;
     }
-    
   };
 
   return (
-    <View style={styles.container}>
-      <InputWrapper>
-        {image != null ? <AddImage source={{uri: image}} /> : null}
-        <InputField
-          placeholder="Calle"
-          placeholderTextColor="grey"
-          multiline
-          numberOfLines={1}
-          value={calle}
-          onChangeText={(content) => setCalle(content)}
-        />
-        <InputField
-          placeholder="Colonia"
-          placeholderTextColor="grey"
-          multiline
-          numberOfLines={1}
-          value={colonia}
-          onChangeText={(content) => setColonia(content)}
-        />
-        <InputField
-          placeholder="Descripción"
-          placeholderTextColor="grey"
-          multiline
-          numberOfLines={3}
-          value={descripcion}
-          onChangeText={(content) => setDescripcion(content)}
-        />
-        {uploading ? (
-          <StatusWrapper>
-            <Text style={styles.text}>{transferred} % Completado</Text>
-            <ActivityIndicator size="large" color="#EA9215" />
-          </StatusWrapper>
-        ) : (
-          <SubmitBtn onPress={submitPost} >
-            <SubmitBtnText> Reportar </SubmitBtnText>
-          </SubmitBtn>
-        )}
-      </InputWrapper>
+    <SafeAreaView>
+      <ScrollView>
+        <View style={styles.container}>
+          <InputWrapper>
+            {image != null ? <AddImage required source={{uri: image}} /> : <AddImage source={require('../assets/img/sImg2.png')} />}
+            <InputField
+              placeholder="Calle"
+              placeholderTextColor="grey"
+              multiline
+              numberOfLines={1}
+              value={calle}
+              onChangeText={content => setCalle(content)}
+              required
+            />
+            <InputField
+              placeholder="Colonia"
+              placeholderTextColor="grey"
+              multiline
+              numberOfLines={1}
+              value={colonia}
+              onChangeText={content => setColonia(content)}
+              required
+            />
+            <InputField
+              placeholder="Descripción"
+              placeholderTextColor="grey"
+              multiline
+              numberOfLines={3}
+              value={descripcion}
+              onChangeText={content => setDescripcion(content)}
+              required
+            />
+            {uploading ? (
+              <StatusWrapper>
+                <Text style={styles.text}>{transferred} % Completado</Text>
+                <ActivityIndicator size="large" color="#EA9215" />
+              </StatusWrapper>
+            ) : (
+              <SubmitBtn onPress={() => {
+                if(image && calle && colonia && descripcion) {
+                  // submitPost
+                  submitPost(image, calle, colonia, descripcion)
+                // } else if (image) {
+                //   ToastAndroid.showWithGravity(
+                //     'Te falta agregar una foto o imagen.',
+                //     ToastAndroid.SHORT,
+                //     ToastAndroid.CENTER,
+                //   );
+                // } else if (calle) {
+                //   ToastAndroid.showWithGravity(
+                //     'Te falta agregar calle.',
+                //     ToastAndroid.SHORT,
+                //     ToastAndroid.CENTER,
+                //   );
+                // } else if (colonia) {
+                //   ToastAndroid.showWithGravity(
+                //     'Te falta agregar colonia.',
+                //     ToastAndroid.SHORT,
+                //     ToastAndroid.CENTER,
+                //   );
+                // } else if (descripcion) {
+                //   ToastAndroid.showWithGravity(
+                //     'Te falta agregar descripción.',
+                //     ToastAndroid.SHORT,
+                //     ToastAndroid.CENTER,
+                //   );
+                } else {
+                  Alert.alert('No has ingresado datos', 'Por favor ingresa todos los datos.');
+                }
+              }}
+              // {submitPost}
+              >
+                <SubmitBtnText> Reportar </SubmitBtnText>
+              </SubmitBtn>
+            )}
+          </InputWrapper>
 
-      {/* <ActionButton buttonColor="rgba(231,76,60,1)">
+          {/* <ActionButton buttonColor="rgba(231,76,60,1)">
         <ActionButton.Item
           buttonColor="#9b59b6"
           title="New Task"
@@ -192,29 +239,45 @@ const AddPostScreen = () => {
         </ActionButton.Item>
       </ActionButton> */}
 
-      <ActionButton buttonColor="rgb(234, 146, 21)" 
-      ///icon={<Icon name="md-cut" style={styles.actionButtonIcon} />}
-
-      renderIcon={active => active ? (<MaterialCommunityIcons
-        name="camera-plus" style={styles.actionButtonIcon} /> ) : (<MaterialCommunityIcons
-          name="camera-plus-outline" style={styles.actionButtonIcon} />)}>
-        <ActionButton.Item
-          buttonColor="#3A4750"
-          title="Tomar foto"
-          onPress={takePhotoFromCamera}>
-          <MaterialCommunityIcons name="camera" style={styles.actionButtonIcon} />
-        </ActionButton.Item>
-        <ActionButton.Item
-          buttonColor="#3A4750"
-          title="Elegir foto de galería"
-          onPress={choosePhotoFromLibrary}>
-          <MaterialIcons
-            name="add-photo-alternate"
-            style={styles.actionButtonIcon}
-          />
-        </ActionButton.Item>
-      </ActionButton>
-    </View>
+          <ActionButton
+            buttonColor="rgb(234, 146, 21)"
+            ///icon={<Icon name="md-cut" style={styles.actionButtonIcon} />}
+            verticalOrientation="down"
+            renderIcon={active =>
+              active ? (
+                <MaterialCommunityIcons
+                  name="camera-plus"
+                  style={styles.actionButtonIcon}
+                />
+              ) : (
+                <MaterialCommunityIcons
+                  name="camera-plus-outline"
+                  style={styles.actionButtonIcon}
+                />
+              )
+            }>
+            <ActionButton.Item
+              buttonColor="#3A4750"
+              title="Tomar foto"
+              onPress={takePhotoFromCamera}>
+              <MaterialCommunityIcons
+                name="camera"
+                style={styles.actionButtonIcon}
+              />
+            </ActionButton.Item>
+            <ActionButton.Item
+              buttonColor="#3A4750"
+              title="Elegir foto de galería"
+              onPress={choosePhotoFromLibrary}>
+              <MaterialIcons
+                name="add-photo-alternate"
+                style={styles.actionButtonIcon}
+              />
+            </ActionButton.Item>
+          </ActionButton>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 

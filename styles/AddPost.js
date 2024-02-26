@@ -16,6 +16,10 @@ export const InputField = styled.TextInput`
     text-align: center;
     width: 90%;
     color: black;
+    border-radius: 20px;
+    border: 1px;
+    margin-top: 20px;
+    border-color: #3A4750;
 `;
 
 export const AddImage = styled.Image`
@@ -34,6 +38,7 @@ export const StatusWrapper = styled.View`
 export const SubmitBtn = styled.TouchableOpacity`
     flex-direction: row;
     justify-content: center;
+    margin-top: 15%;
     background-color: #EA9215;
     border-radius: 5px;
     padding: 10px 25px;
