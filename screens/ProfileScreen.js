@@ -1,12 +1,12 @@
 import firestore from '@react-native-firebase/firestore';
 import { useContext, useEffect, useState } from 'react';
 import {
-  Alert,
   Image,
   StyleSheet,
   Text,
+  ToastAndroid,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -35,6 +35,16 @@ const ProfileScreen = ({navigation}) => {
     navigation.addListener('focus', () => setLoading(!loading));
   }, [navigation, loading]);
 
+  const isGoogleUser = user?.providerData.some(provider => provider.providerId === 'google.com');
+
+  const showToastWithGravity = () => {
+    ToastAndroid.showWithGravity(
+      'Te registraste con Google, no puedes editar tu perfil.',
+      ToastAndroid.SHORT,
+      ToastAndroid.CENTER,
+    );
+  };
+
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#3A4750'}}>
       <ScrollView
@@ -56,22 +66,19 @@ const ProfileScreen = ({navigation}) => {
         {/* <Text  >{user.uid}{"\n"}</Text> */}
         {/* <Text style={styles.aboutUser} >Hello my name is Jenny Doe and i am software deveper and 23 years old</Text> */}
         <View style={styles.userBtnWrapper}>
-          {isGoogleAuthenticated ? (
+          {!isGoogleUser ? (
           <TouchableOpacity
-            style={styles.userBtn}
-            onPress={() => {
-              Alert.alert(
-                'No puedes editar tu perfil',
-                'No puedes realizar esta acción, ya que te registraste con Google',
-              );
-            }}>
-            <Text style={styles.userBtnTxt}>Editar Perfil</Text>
-          </TouchableOpacity>
+              style={styles.userBtn}
+              onPress={() => {
+                navigation.navigate('EditProfile');
+              }}>
+              <Text style={styles.userBtnTxt}>Editar Perfil</Text>
+            </TouchableOpacity>
           ) : (
             <TouchableOpacity
               style={styles.userBtn}
               onPress={() => {
-                navigation.navigate('EditProfile');
+                showToastWithGravity()
               }}>
               <Text style={styles.userBtnTxt}>Editar Perfil</Text>
             </TouchableOpacity>

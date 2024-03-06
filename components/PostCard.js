@@ -1,5 +1,4 @@
 import firestore from '@react-native-firebase/firestore';
-import moment from 'moment';
 import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../navigation/AuthProvider';
 import {
@@ -8,18 +7,19 @@ import {
   PostImgResp,
   PostText,
   PostTextRes,
-  PostTime,
-  TxtRespReporte,
-  UserImg,
-  UserInfo,
-  UserInfoText,
-  UserName
+  TxtRespReporte
 } from '../styles/FeedStyles';
 import ProgressiveImage from './ProgressiveImage';
+
+// import { useRefresh } from '../components/RefreshPosts';
 
 const PostCard = ({item, onDelete}) => {
   const {user, logout} = useContext(AuthContext);
   const [userData, setUserData] = useState(null);
+  const [isCardActive, setIsCardActive] = useState(true);
+
+  // const { refresh, setRefresh } = useRefresh();
+  // const [localRefresh, setLocalRefresh] = useState(false);
 
   const getUser = async () => {
     await firestore()
@@ -30,17 +30,33 @@ const PostCard = ({item, onDelete}) => {
         if (documentSnapshot.exists) {
           console.log('Datos de Usuario: ', documentSnapshot.data());
           setUserData(documentSnapshot.data());
+
+          // Verificar si el estatus es 3 y si la tarjeta aún está activa
+          if (item.estatus === 3 && isCardActive) {
+            setIsCardActive(true);
+            // setRefresh(true);
+          }
         }
       });
   };
 
+  // useEffect(() => {
+  //   setLocalRefresh(refresh);
+  // }, [refresh]);
+
   useEffect(() => {
     getUser();
   }, []);
+  // }, [localRefresh]);
+
+  // No renderizar la tarjeta si isCardActive es false
+  if (!isCardActive || item.estatus === 10) {
+    return null;
+  }
 
   return (
     <Card key={item.id}>
-      <UserInfo>
+      {/* <UserInfo>
         <UserImg
           source={{
             uri: userData
@@ -56,7 +72,7 @@ const PostCard = ({item, onDelete}) => {
           </UserName>
           <PostTime>{moment(item.postTime.toDate()).fromNow()}</PostTime>
         </UserInfoText>
-      </UserInfo>
+      </UserInfo> */}
       <PostText>Calle: {item.calle}</PostText>
       <PostText>Col. {item.colonia}</PostText>
       <PostText>{item.reporte}</PostText>
@@ -66,7 +82,7 @@ const PostCard = ({item, onDelete}) => {
       <ProgressiveImage
         defaultImageSource={require('../assets/posts/post-img-1.jpg')}
         source={{uri: item.postImg}}
-        style={{width: '100%', height: 250, marginTop: 10, borderRadius: 20}}
+        style={{width: '100%', height: 250, marginTop: '5%', borderRadius: 20}}
         resizeMode="cover"
       />
 

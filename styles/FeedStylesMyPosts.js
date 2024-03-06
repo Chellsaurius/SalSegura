@@ -3,9 +3,9 @@ import styled from 'styled-components';
 export const Container = styled.View`
   flex: 1;
   justify-content: center;
-  align-items: center;
+  /* align-items: center; */
   background-color: #ffffff;
-  padding: 20px;
+  padding: 5%;
 `;
 
 export const Card = styled.View`
@@ -50,19 +50,20 @@ export const PostText = styled.Text`
   font-size: 14px;
   font-family: 'Courier New';
   color: black;
-  padding-left: 15px;
-  padding-right: 15px;
-  padding-bottom: 15px;
+  padding-left: 5%;
+  padding-right: 5%;
+  padding-bottom: 5%;
 `;
 
 export const PostTextRes = styled.Text`
   font-size: 14px;
   font-family: 'Courier New';
   color: black;
-  padding-left: 15px;
+  padding: 3%;
+  /* padding-left: 15px;
   padding-right: 15px;
   padding-bottom: 10px;
-  padding-top: 10px;
+  padding-top: 10px; */
 `;
 
 export const TxtRespReporte = styled.View`
@@ -70,12 +71,11 @@ export const TxtRespReporte = styled.View`
   justify-content: center;
   /* margin-left: 50%; */
   width: 90%;
-  /* height: 7%; */
-  margin-bottom: 5%;
+  /* margin-bottom: 5%; */
   align-items: center;
   align-self: center;
   background-color: #379237;
-  margin-top: 5%;
+  /* margin-top: 5%; */
   
 `;
 
@@ -89,10 +89,10 @@ export const Divider = styled.View`
 export const DividerResp = styled.View`
   border-bottom-color: #61677a;
   border-bottom-width: 1px;
-  width: 92%;
+  width: 90%;
   align-self: center;
-  height: 2px;
-  margin: 5px 10px 0px 0px;
+  /* height: 2px; */
+  margin: 5% 5% 5% 5%;
 `;
 
 export const BtnStatus = styled.View`
@@ -129,7 +129,7 @@ export const PostImg = styled.Image`
 export const PostImgResp = styled.Image`
   width: 100%;
   height: 250px;
-  margin-top: 5px;
+  margin-top: 5%;
   border-radius: 20px;
   /* margin-bottom: 10px; */
 `;

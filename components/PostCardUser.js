@@ -63,6 +63,10 @@ const PostCardUser = ({item, onDelete}) => {
       statusColor = '#0D9276';
       statusText = 'Completo';
       break;
+      case 10:
+        statusColor = '#EA9215';
+        statusText = 'Finalizado';
+        break;
     case 999:
       statusColor = '#D04848';
       statusText = 'Rechazado';

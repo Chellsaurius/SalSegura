@@ -18,12 +18,14 @@ import ProfileScreen from '../screens/ProfileScreen';
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
+import { RefreshProvider } from '../components/RefreshPosts';
+
 // NavBar
 const FeedStack = ({navigation}) => (
   <Stack.Navigator>
     {/* <Stack.Screen name='Salamanca' component={HomeScreen} /> */}
     <Stack.Screen
-      name="Salamanca Segura"
+      name="Salamanca Segura"  
       component={HomeScreen}
       options={{
         headerTitleAlign: 'center',
@@ -188,57 +190,59 @@ const ProfileStack = ({navigation}) => (
 // Tab Navigator
 const AppStack = () => {
   return (
-    <Tab.Navigator
-      screenOptions={{
-        tabBarActiveTintColor: '#EA9215',
-        tabBarInactiveTintColor: '#EEEEEE',
-        tabBarStyle: {
-          backgroundColor: '#303841',
-          // shadowColor: '#EA9215',
-          // elevation: 5,
-        },
-        // 
-      }}>
-      <Tab.Screen
-        name="Salamanca"
-        component={FeedStack}
-        options={{
-          headerShown: false,
-          tabBarLabel: 'Reportes Ciudadania',
-          // tabBarVisible: route.state && route.state.index === 0,
-          tabBarIcon: ({color, size}) => (
-            <MaterialCommunityIcons
-              name="post-outline"
-              color={color}
-              size={size}
-            />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="MisReportes"
-        component={MyPostStack}
-        options={{
-          // title: "Generar reporte",
-          headerShown: false,
-          tabBarLabel: 'Mis Reportes',
-          tabBarIcon: ({color, size}) => (
-            <MaterialIcons name="post-add" color={color} size={size} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="MyProfile"
-        component={ProfileStack}
-        options={{
-          headerShown: false,
-          tabBarLabel: 'Perfil',
-          tabBarIcon: ({color, size}) => (
-            <Ionicons name="person-outline" color={color} size={size} />
-          ),
-        }}
-      />
-    </Tab.Navigator>
+    <RefreshProvider>
+      <Tab.Navigator
+        screenOptions={{
+          tabBarActiveTintColor: '#EA9215',
+          tabBarInactiveTintColor: '#EEEEEE',
+          tabBarStyle: {
+            backgroundColor: '#303841',
+            // shadowColor: '#EA9215',
+            // elevation: 5,
+          },
+          //
+        }}>
+        <Tab.Screen
+          name="Salamanca"
+          component={FeedStack}
+          options={{
+            headerShown: false,
+            tabBarLabel: 'Reportes Ciudadania',
+            // tabBarVisible: route.state && route.state.index === 0,
+            tabBarIcon: ({color, size}) => (
+              <MaterialCommunityIcons
+                name="post-outline"
+                color={color}
+                size={size}
+              />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="MisReportes"
+          component={MyPostStack}
+          options={{
+            // title: "Generar reporte",
+            headerShown: false,
+            tabBarLabel: 'Mis Reportes',
+            tabBarIcon: ({color, size}) => (
+              <MaterialIcons name="post-add" color={color} size={size} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="MyProfile"
+          component={ProfileStack}
+          options={{
+            headerShown: false,
+            tabBarLabel: 'Perfil',
+            tabBarIcon: ({color, size}) => (
+              <Ionicons name="person-outline" color={color} size={size} />
+            ),
+          }}
+        />
+      </Tab.Navigator>
+    </RefreshProvider>
   );
 };
 

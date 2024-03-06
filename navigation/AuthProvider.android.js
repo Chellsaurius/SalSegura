@@ -24,11 +24,11 @@ export const AuthProvider = ({children}) => {
           // }
         }catch(e) {
           console.log(e);
-          if (e == 'Error: [auth/invalid-credential] The supplied auth credential is incorrect, malformed or has expired.') {
-            ToastAndroid.show('Usuario o contraseña incorrecta...!', ToastAndroid.SHORT);
-          } else if (e == 'Error: [auth/user-disabled] The user account has been disabled by an administrator.') {
-            ToastAndroid.show('Usuario inhabilitado ...!', ToastAndroid.SHORT);
-          } else if (e == 'Error: [auth/too-many-requests] We have blocked all requests from this device due to unusual activity. Try again later. [ Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later.') {
+          if (e.code === 'auth/invalid-credential') {
+            ToastAndroid.show('Usuario o contraseña incorrecta!', ToastAndroid.SHORT);
+          } else if (e.code === 'auth/user-disabled') {
+            ToastAndroid.show('Usuario inhabilitado!', ToastAndroid.SHORT);
+          } else if (e.code === 'auth/too-many-requests') {
             ToastAndroid.show('Usuario inhabilitado, intentalo más tarde.' +e , ToastAndroid.SHORT);
           } else {
             ToastAndroid.show('Usuario inhabilitado, intentalo más tarde.', ToastAndroid.SHORT);

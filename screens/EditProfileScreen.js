@@ -18,7 +18,6 @@ import { AuthContext } from '../navigation/AuthProvider';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Feather from 'react-native-vector-icons/Feather';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FormButton from '../components/FormButton';
 
@@ -317,7 +316,7 @@ const EditProfileScreen = () => {
             {userData ? userData.email : ''}
           </Text>
         </View>
-        <View style={styles.action}>
+        {/* <View style={styles.action}>
           <MaterialCommunityIcons
             name="form-textbox-password"
             size={25}
@@ -332,8 +331,8 @@ const EditProfileScreen = () => {
             // autoCorrect={false}
             style={styles.textInput}
           />
-          {/* <Text style={styles.textStyle}>{userData ? userData.password : ''}</Text> */}
-        </View>
+          <Text style={styles.textStyle}>{userData ? userData.password : ''}</Text>
+        </View> */}
         {/* <TouchableOpacity style={styles.commandButton} onPress={() => {}}>
           <Text style={styles.panelButtonTitle}>Actualizar</Text>
         </TouchableOpacity> */}

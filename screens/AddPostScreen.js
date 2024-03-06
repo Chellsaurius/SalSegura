@@ -1,6 +1,6 @@
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { ActivityIndicator, Alert, StyleSheet, Text, ToastAndroid, View } from 'react-native';
 import ActionButton from 'react-native-action-button';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -18,6 +18,8 @@ import {
   SubmitBtnText,
 } from '../styles/AddPost';
 
+import { useRefresh } from '../components/RefreshPosts';
+
 const AddPostScreen = () => {
   const {user, logout} = useContext(AuthContext);
   const [image, setImage] = useState(null);
@@ -26,6 +28,9 @@ const AddPostScreen = () => {
   const [calle, setCalle] = useState(null);
   const [colonia, setColonia] = useState(null);
   const [descripcion, setDescripcion] = useState(null);
+
+  // const [refresh, setRefresh] = useState(false);
+  const { refresh, setRefresh, notifyRefreshChange } = useRefresh();
 
   const takePhotoFromCamera = () => {
     ImagePicker.openCamera({
@@ -85,9 +90,16 @@ const AddPostScreen = () => {
           'Tu reporte ha sido recibido',
           'Tu reporte esta en revisión. Gracias por hacer de Salamanca Gto. una mejor ciudad! 😁',
         );
+        // Limpiar campos después de subir el reporte
         setCalle(null);
         setColonia(null);
         setDescripcion(null);
+
+        // Activar la actualización automática
+        setRefresh(true);
+
+        // Activar la actualización automática
+        notifyRefreshChange(); // Cambiará el estado de refresh y notificará a otros componentes
       })
       .catch(error => {
         console.log('Algo salió mal al subir el reporte', error);
@@ -140,6 +152,18 @@ const AddPostScreen = () => {
     }
   };
 
+  useEffect(() => {
+    console.log('El estado "refresh" ha cambiado:', refresh);
+
+    
+  }, [refresh]);
+
+  
+
+  // const handleRefreshClick = () => {
+  //   setRefresh(true);
+  // }
+
   return (
     <SafeAreaView>
       <ScrollView>
@@ -147,7 +171,7 @@ const AddPostScreen = () => {
           <InputWrapper>
             {image != null ? <AddImage required source={{uri: image}} /> : <AddImage source={require('../assets/img/sImg2.png')} />}
             <InputField
-              placeholder="Calle"
+              placeholder="Calle:"
               placeholderTextColor="grey"
               multiline
               numberOfLines={1}
@@ -156,7 +180,7 @@ const AddPostScreen = () => {
               required
             />
             <InputField
-              placeholder="Colonia"
+              placeholder="Colonia:"
               placeholderTextColor="grey"
               multiline
               numberOfLines={1}
@@ -165,7 +189,7 @@ const AddPostScreen = () => {
               required
             />
             <InputField
-              placeholder="Descripción"
+              placeholder="Descripción:"
               placeholderTextColor="grey"
               multiline
               numberOfLines={3}
@@ -183,6 +207,7 @@ const AddPostScreen = () => {
                 if(image && calle && colonia && descripcion) {
                   // submitPost
                   submitPost(image, calle, colonia, descripcion)
+                  // handleRefreshClick();
                 // } else if (image) {
                 //   ToastAndroid.showWithGravity(
                 //     'Te falta agregar una foto o imagen.',

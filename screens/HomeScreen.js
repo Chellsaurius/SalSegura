@@ -1,16 +1,20 @@
+import firestore from '@react-native-firebase/firestore';
 import React, { useEffect, useState } from 'react';
 import { FlatList, SafeAreaView, ScrollView, View } from 'react-native';
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import PostCard from '../components/PostCard';
 import { Container } from '../styles/FeedStyles';
 
-import firestore from '@react-native-firebase/firestore';
-
-import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
+import { useRefresh } from '../components/RefreshPosts';
 
 const HomeScreen = () => {
   const [reportes, setReportes] = useState(null);
   const [loading, setLoading] = useState(true);
   // const [deleted, setDeleted] = useState(false);
+  const { refresh, setRefresh } = useRefresh();
+
+    // Agrega un nuevo estado para almacenar la función de retorno del listener
+    const [unsubscribe, setUnsubscribe] = useState(null);
 
   const fetchReportes = async () => {
     try {
@@ -68,8 +72,56 @@ const HomeScreen = () => {
   };
 
   useEffect(() => {
-    fetchReportes();
-  }, []);
+    const query = firestore()
+    .collection('reportes')
+    .where('estatus', '==', 3)
+    .orderBy('repTime', 'desc');
+
+  // Establecer el listener y guardar la función de retorno en el estado
+  const listener = query.onSnapshot(querySnapshot => {
+    const list = [];
+    querySnapshot.forEach(doc => {
+      // Procesar los documentos y construir la lista
+      const {
+        userId,
+        reporte,
+        calle,
+        colonia,
+        repImg,
+        repTime,
+        respReporte,
+        estatus,
+        atendidoPor,
+      } = doc.data();
+      list.push({
+        id: doc.id,
+        userId,
+        userName: 'Christy Alex',
+        userImg:
+          'https://imagenes.elpais.com/resizer/S9AkQVs_IKOK6fRyBlrNhanuQ9g=/1960x1470/filters:focal(1743x722:1753x732)/cloudfront-eu-central-1.images.arcpublishing.com/prisa/VQPBQ4UU2OOA7MXYFFQFVJ4PBM.jpg',
+        postTime: repTime,
+        reporte,
+        calle,
+        colonia,
+        postImg: repImg,
+        respReporte,
+        estatus,
+        atendidoPor,
+        // Alumbrado y Limpia
+      });
+    });
+    setReportes(list);
+    if (loading) {
+      setLoading(false);
+    }
+  });
+
+  setUnsubscribe(() => listener);
+  // fetchReportes();
+  // Limpia la función de retorno cuando el componente se desmonta
+  return () => listener();
+    
+  }, [refresh]);
 
   // useEffect(() => {
   //   fetchReportes();
