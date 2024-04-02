@@ -1,6 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
+import ForgotPasswordScreen from '../screens/ForgotPasswordScreen';
 import LoginScreen from '../screens/LoginScreen';
 import SignupScreen from '../screens/SignupScreen';
 import SliderScreeen from '../screens/SliderScreen';
@@ -53,13 +54,13 @@ const AuthStack = () => {
         options={{header: () => null}}
       />
       <Stack.Screen
-        name="Signup"
-        component={SignupScreen}
+        name="ForgotPassword"
+        component={ForgotPasswordScreen}
         options={({navigation}) => ({
           title: '',
           headerStyle: {
-            backgroundColor: '#f9fafd',
-            shadowColor: '#f9fafd',
+            backgroundColor: '#303841',
+            shadowColor: '#303841',
             elevation: 0,
           },
           headerLeft: () => (
@@ -67,8 +68,31 @@ const AuthStack = () => {
               <AntDesing.Button 
                 name="left"
                 size={25}
-                backgroundColor="#f9fafd"
-                color="#333333"
+                backgroundColor="#303841"
+                color="#FFFFFF"
+                onPress={() => navigation.navigate('Login')}
+              />
+            </View>
+          ),
+        })}
+      />
+      <Stack.Screen
+        name="Signup"
+        component={SignupScreen}
+        options={({navigation}) => ({
+          title: '',
+          headerStyle: {
+            backgroundColor: '#303841',
+            shadowColor: '#303841',
+            elevation: 0,
+          },
+          headerLeft: () => (
+            <View style={{marginLeft: 10}}>
+              <AntDesing.Button 
+                name="left"
+                size={25}
+                backgroundColor="#303841"
+                color="#FFFFFF"
                 onPress={() => navigation.navigate('Login')}
               />
             </View>

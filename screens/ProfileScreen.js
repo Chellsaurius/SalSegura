@@ -6,7 +6,7 @@ import {
   Text,
   ToastAndroid,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -35,7 +35,9 @@ const ProfileScreen = ({navigation}) => {
     navigation.addListener('focus', () => setLoading(!loading));
   }, [navigation, loading]);
 
-  const isGoogleUser = user?.providerData.some(provider => provider.providerId === 'google.com');
+  const isGoogleUser = user?.providerData.some(
+    provider => provider.providerId === 'google.com',
+  );
 
   const showToastWithGravity = () => {
     ToastAndroid.showWithGravity(
@@ -51,23 +53,33 @@ const ProfileScreen = ({navigation}) => {
         style={styles.container}
         contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}
         showsVerticalScrollIndicator={false}>
-        <Image
-          style={styles.userImg}
-          source={{
-            uri: userData
-              ? userData.userImg
-              : 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-          }}
-        />
+        {!isGoogleUser ? (
+          <Image
+            style={styles.userImg}
+            source={{
+              uri: userData
+                ? userData.userImg
+                : 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+            }}
+          />
+        ) : (
+          <Image
+            style={styles.userImg}
+            source={{
+              uri: user.photoURL
+            }}
+          />
+        )}
+
         <Text style={styles.userName}>
-          {userData ? userData.fname : 'Test'}{' '}
-          {userData ? userData.lname : 'User'}
+          {userData ? userData.fname : user.displayName}{' '}
+          {userData ? userData.lname : ''}
         </Text>
         {/* <Text  >{user.uid}{"\n"}</Text> */}
         {/* <Text style={styles.aboutUser} >Hello my name is Jenny Doe and i am software deveper and 23 years old</Text> */}
         <View style={styles.userBtnWrapper}>
           {!isGoogleUser ? (
-          <TouchableOpacity
+            <TouchableOpacity
               style={styles.userBtn}
               onPress={() => {
                 navigation.navigate('EditProfile');
@@ -78,7 +90,7 @@ const ProfileScreen = ({navigation}) => {
             <TouchableOpacity
               style={styles.userBtn}
               onPress={() => {
-                showToastWithGravity()
+                showToastWithGravity();
               }}>
               <Text style={styles.userBtnTxt}>Editar Perfil</Text>
             </TouchableOpacity>

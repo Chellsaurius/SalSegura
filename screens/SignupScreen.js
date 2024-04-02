@@ -1,12 +1,12 @@
 import React, { useContext, useState } from 'react';
 import {
-  Alert,
   Platform,
   ScrollView,
   StyleSheet,
   Text,
+  ToastAndroid,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
 import FormButton from '../components/FormButton';
 import FormInput from '../components/FormInput';
@@ -63,22 +63,25 @@ const SignupScreen = ({navigation}) => {
                 if (password === confirmPassword) {
                   register(email, password);
                 } else {
-                  Alert.alert(
-                    'Las contraseñas no coinciden',
-                    'Las contraseñas deben coincidir.',
-                  );
+                  ToastAndroid.show('Las contraseñas no coinciden!', ToastAndroid.SHORT);
+                  // Alert.alert(
+                  //   'Las contraseñas no coinciden',
+                  //   'Las contraseñas deben coincidir.',
+                  // );
                 }
               } else {
-                Alert.alert(
-                  'Faltan datos',
-                  'La contraseña debe contener al menos 6 caracteres',
-                );
+                ToastAndroid.show('Faltan datos, la contraseña debe contener al menos 6 caracteres', ToastAndroid.SHORT);
+                // Alert.alert(
+                //   'Faltan datos',
+                //   'La contraseña debe contener al menos 6 caracteres',
+                // );
               }
             } else {
-              Alert.alert(
-                'No ingreso datos',
-                'Por favor complete todos los campos requeridos.',
-              );
+              ToastAndroid.show('No hay datos, por favor complete todos los campos requeridos.', ToastAndroid.SHORT);
+              // Alert.alert(
+              //   'No ingreso datos',
+              //   'Por favor complete todos los campos requeridos.',
+              // );
             }
           }}
           // register(email, password)}
@@ -135,7 +138,7 @@ export default SignupScreen;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#f9fafd',
+    backgroundColor: '#FFFFFF',
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',

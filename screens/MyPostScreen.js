@@ -1,7 +1,7 @@
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
 import React, { useContext, useEffect, useState } from 'react';
-import { Alert, SafeAreaView, ScrollView, StyleSheet } from 'react-native';
+import { Alert, SafeAreaView, ScrollView, StyleSheet, ToastAndroid, } from 'react-native';
 import PostCardUser from '../components/PostCardUser';
 import { AuthContext } from '../navigation/AuthProvider';
 
@@ -203,10 +203,11 @@ const MyPostScreen = () => {
       .doc(reportesId)
       .delete()
       .then(() => {
-        Alert.alert(
-          'Reporte eliminado',
-          'Tu reporte se elimino. Gracias por hacer de Salamanca Gto. una mejor ciudad!😁',
-        );
+        ToastAndroid.show('Reporte eliminado. Gracias por hacer de Salamanca Gto. una mejor ciudad!😁', ToastAndroid.LONG);
+        // Alert.alert(
+        //   'Reporte eliminado',
+        //   'Tu reporte se elimino. Gracias por hacer de Salamanca Gto. una mejor ciudad!😁',
+        // );
       })
       .catch(e => console.log('Error al eliminar el reporte.', e))
       .finally(() => setRefresh(true)); // Agregamos esto para indicar que se ha realizado un cambio

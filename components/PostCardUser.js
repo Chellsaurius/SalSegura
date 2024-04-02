@@ -1,5 +1,6 @@
 import firestore from '@react-native-firebase/firestore';
 import moment from 'moment';
+import 'moment/locale/es';
 import React, { useContext, useEffect, useState } from 'react';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { AuthContext } from '../navigation/AuthProvider';
@@ -23,7 +24,7 @@ import {
 import ProgressiveImage from './ProgressiveImage';
 
 const PostCardUser = ({item, onDelete}) => {
-  const {user, logout} = useContext(AuthContext);
+  const {user, logout, isGoogleAuthenticated} = useContext(AuthContext);
   const [userData, setUserData] = useState(null);
 
   const getUser = async () => {
@@ -43,8 +44,13 @@ const PostCardUser = ({item, onDelete}) => {
     getUser();
   }, []);
 
+  const isGoogleUser = user?.providerData.some(
+    provider => provider.providerId === 'google.com',
+  );
+
   let statusColor;
   let statusText;
+  moment.locale('es-mx');
 
   switch (item.estatus) {
     case 0:
@@ -79,20 +85,30 @@ const PostCardUser = ({item, onDelete}) => {
   return (
     <Card key={item.id}>
       <UserInfo>
-        <UserImg
-          source={{
-            uri: userData
-              ? userData.userImg ||
-                'https://images.unsplash.com/photo-1499750310107-5fef28a66643?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-              : 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-          }}
-        />
+      {!isGoogleUser ? (
+          <UserImg
+            
+            source={{
+              uri: userData
+                ? userData.userImg
+                : 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+            }}
+          />
+        ) : (
+          <UserImg
+            
+            source={{
+              uri: user.photoURL
+            }}
+          />
+        )}
+        
         <UserInfoText>
           <UserName>
-            {userData ? userData.fname || 'Test' : 'Test'}{' '}
-            {userData ? userData.lname || 'User' : 'User'}
+            {userData ? userData.fname || 'Test' : user.displayName}{' '}
+            {userData ? userData.lname || 'User' : ''}
           </UserName>
-          <PostTime>{moment(item.postTime.toDate()).fromNow()}</PostTime>
+          <PostTime>{moment(item.postTime.toDate()).locale('es').fromNow()}</PostTime>
         </UserInfoText>
       </UserInfo>
       <PostText>Calle: {item.calle}</PostText>

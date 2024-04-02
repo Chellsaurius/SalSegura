@@ -1,7 +1,7 @@
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
 import React, { useContext, useEffect, useState } from 'react';
-import { ActivityIndicator, Alert, StyleSheet, Text, ToastAndroid, View } from 'react-native';
+import { ActivityIndicator, StyleSheet, Text, ToastAndroid, View } from 'react-native';
 import ActionButton from 'react-native-action-button';
 import { ScrollView } from 'react-native-gesture-handler';
 import ImagePicker from 'react-native-image-crop-picker';
@@ -86,10 +86,17 @@ const AddPostScreen = () => {
       })
       .then(() => {
         console.log('Reporte subido!');
-        Alert.alert(
-          'Tu reporte ha sido recibido',
-          'Tu reporte esta en revisión. Gracias por hacer de Salamanca Gto. una mejor ciudad! 😁',
+        ToastAndroid.showWithGravityAndOffset(
+          'Tu reporte ha sido recibido. Reporte esta en revisión. Gracias por hacer de Salamanca Gto. una mejor ciudad! 😁',
+          ToastAndroid.LONG,
+          ToastAndroid.TOP,
+          10000,
+          300,
         );
+        // Alert.alert(
+        //   'Tu reporte ha sido recibido',
+        //   'Tu reporte esta en revisión. Gracias por hacer de Salamanca Gto. una mejor ciudad! 😁',
+        // );
         // Limpiar campos después de subir el reporte
         setCalle(null);
         setColonia(null);
@@ -233,7 +240,8 @@ const AddPostScreen = () => {
                 //     ToastAndroid.CENTER,
                 //   );
                 } else {
-                  Alert.alert('No has ingresado datos', 'Por favor ingresa todos los datos.');
+                  ToastAndroid.show('Por favor ingresa los datos.', ToastAndroid.SHORT);
+                  // Alert.alert('No has ingresado datos', 'Por favor ingresa todos los datos.');
                 }
               }}
               // {submitPost}

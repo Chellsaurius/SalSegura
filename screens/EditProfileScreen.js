@@ -2,7 +2,6 @@ import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
 import React, { useContext, useEffect, useState } from 'react';
 import {
-  Alert,
   ImageBackground,
   Modal,
   ScrollView,
@@ -11,7 +10,7 @@ import {
   TextInput,
   ToastAndroid,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
 import { AuthContext } from '../navigation/AuthProvider';
@@ -61,10 +60,11 @@ const EditProfileScreen = () => {
       })
       .then(() => {
         console.log('Usuario actualizado!');
-        Alert.alert(
-          'Perfil actualizado! 😎',
-          'Tu perfil se actualizo exitosamente',
-        );
+        ToastAndroid.show('Perfil actualizado, se actualizo exitosamente! 😎', ToastAndroid.SHORT);
+        // Alert.alert(
+        //   'Perfil actualizado! 😎',
+        //   'Tu perfil se actualizo exitosamente',
+        // );
       });
   };
 

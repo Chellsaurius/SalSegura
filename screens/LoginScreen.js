@@ -1,11 +1,11 @@
 import React, { useContext, useState } from 'react';
 import {
-  Alert,
   Image,
   Platform,
   ScrollView,
   StyleSheet,
   Text,
+  ToastAndroid,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -71,14 +71,11 @@ const LoginScreen = ({navigation}) => {
               //   );
               // }
             } else {
-              Alert.alert(
-                'Faltan campos',
-                'Por favor complete todos los campos requeridos.',
-              );
+              ToastAndroid.show('Faltan campos!, Por favor completa todos los campos requeridos.', ToastAndroid.SHORT);
             }
           }}
         />
-        <TouchableOpacity style={styles.forgotButton} onPress={() => {}}>
+        <TouchableOpacity style={styles.forgotButton} onPress={() => navigation.navigate('ForgotPassword')}>
           <Text style={styles.navButtonText}>Olvidaste tu contraseña</Text>
         </TouchableOpacity>
 
