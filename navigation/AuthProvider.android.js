@@ -10,16 +10,6 @@ export const AuthContext = createContext();
 export const AuthProvider = ({children}) => {
   const [user, setUser] = useState(null);
 
-  // const isUserDisabled = async (uid) => {
-  //   try {
-  //     const userRecord = await auth().getUser(uid);
-  //     return userRecord.disabled;
-  //   } catch (error) {
-  //     console.error('Error al verificar usuario inhabilitado:', error);
-  //     return true;
-  //   }
-  // };
-
   return (
     <AuthContext.Provider
       value={{
@@ -76,7 +66,6 @@ export const AuthProvider = ({children}) => {
             ToastAndroid.show('Usuario inhabilitado...!', ToastAndroid.SHORT);
           }
         },
-        // isUserDisabled, // Agregamos la función isUserDisabled al contexto de autenticación
         fbLogin: async () => {
           try {
             // Attempt login with permissions

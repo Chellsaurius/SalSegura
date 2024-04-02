@@ -215,30 +215,7 @@ const AddPostScreen = () => {
                   // submitPost
                   submitPost(image, calle, colonia, descripcion)
                   // handleRefreshClick();
-                // } else if (image) {
-                //   ToastAndroid.showWithGravity(
-                //     'Te falta agregar una foto o imagen.',
-                //     ToastAndroid.SHORT,
-                //     ToastAndroid.CENTER,
-                //   );
-                // } else if (calle) {
-                //   ToastAndroid.showWithGravity(
-                //     'Te falta agregar calle.',
-                //     ToastAndroid.SHORT,
-                //     ToastAndroid.CENTER,
-                //   );
-                // } else if (colonia) {
-                //   ToastAndroid.showWithGravity(
-                //     'Te falta agregar colonia.',
-                //     ToastAndroid.SHORT,
-                //     ToastAndroid.CENTER,
-                //   );
-                // } else if (descripcion) {
-                //   ToastAndroid.showWithGravity(
-                //     'Te falta agregar descripción.',
-                //     ToastAndroid.SHORT,
-                //     ToastAndroid.CENTER,
-                //   );
+                
                 } else {
                   ToastAndroid.show('Por favor ingresa los datos.', ToastAndroid.SHORT);
                   // Alert.alert('No has ingresado datos', 'Por favor ingresa todos los datos.');
