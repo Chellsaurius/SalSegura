@@ -23,6 +23,8 @@ import {
 } from '../styles/FeedStylesMyPosts';
 import ProgressiveImage from './ProgressiveImage';
 
+moment.updateLocale('es');  // Establece el idioma a español
+
 const PostCardUser = ({item, onDelete}) => {
   const {user, logout, isGoogleAuthenticated} = useContext(AuthContext);
   const [userData, setUserData] = useState(null);
@@ -40,17 +42,16 @@ const PostCardUser = ({item, onDelete}) => {
       });
   };
 
-  useEffect(() => {
-    getUser();
-  }, []);
-
   const isGoogleUser = user?.providerData.some(
     provider => provider.providerId === 'google.com',
   );
 
+  useEffect(() => {
+    getUser();
+  }, []);
+
   let statusColor;
   let statusText;
-  moment.locale('es-mx');
 
   switch (item.estatus) {
     case 0:
@@ -87,7 +88,6 @@ const PostCardUser = ({item, onDelete}) => {
       <UserInfo>
       {!isGoogleUser ? (
           <UserImg
-            
             source={{
               uri: userData
                 ? userData.userImg
@@ -96,9 +96,10 @@ const PostCardUser = ({item, onDelete}) => {
           />
         ) : (
           <UserImg
-            
             source={{
-              uri: user.photoURL
+              uri: user && user.photoURL 
+              ? user.photoURL 
+              : 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
             }}
           />
         )}
@@ -108,7 +109,7 @@ const PostCardUser = ({item, onDelete}) => {
             {userData ? userData.fname || 'Test' : user.displayName}{' '}
             {userData ? userData.lname || 'User' : ''}
           </UserName>
-          <PostTime>{moment(item.postTime.toDate()).locale('es').fromNow()}</PostTime>
+          <PostTime>{moment(item.postTime.toDate()).fromNow()}</PostTime>
         </UserInfoText>
       </UserInfo>
       <PostText>Calle: {item.calle}</PostText>

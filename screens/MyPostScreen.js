@@ -219,7 +219,7 @@ const MyPostScreen = () => {
 
   return (
     <SafeAreaView style={{flex: 1}}>
-      {/* {loading ? ( */}
+      
       <ScrollView
         style={styles.container}
         contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}
