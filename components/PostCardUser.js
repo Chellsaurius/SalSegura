@@ -23,7 +23,7 @@ import {
 } from '../styles/FeedStylesMyPosts';
 import ProgressiveImage from './ProgressiveImage';
 
-moment.updateLocale('es');  // Establece el idioma a español
+moment.locale('es');  // Establece el idioma a español
 
 const PostCardUser = ({item, onDelete}) => {
   const {user, logout, isGoogleAuthenticated} = useContext(AuthContext);
