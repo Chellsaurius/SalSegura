@@ -121,7 +121,7 @@ const PostCardUser = ({item, onDelete}) => {
 
       {item.estatus !== undefined && (
         <BtnStatus style={{backgroundColor: statusColor}}>
-          <TxtStatus style={{marginTop: 10}}>{statusText}</TxtStatus>
+          <TxtStatus style={{marginTop: 10}}>Estatus: {statusText}</TxtStatus>
         </BtnStatus>
       )}
 

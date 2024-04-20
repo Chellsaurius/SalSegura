@@ -115,14 +115,15 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   userImg: {
+    marginTop: '3%',
     height: 150,
     width: 150,
     borderRadius: 75,
   },
   userName: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: 'bold',
-    marginTop: 10,
+    marginTop: '5%',
     marginBottom: 10,
     color: '#FFFFFF',
   },
@@ -142,13 +143,15 @@ const styles = StyleSheet.create({
   userBtn: {
     borderColor: '#EA9215',
     borderWidth: 2,
-    borderRadius: 3,
+    borderRadius: 10,
     paddingVertical: 8,
-    paddingHorizontal: 12,
-    marginHorizontal: 5,
+    paddingHorizontal: 15,
+    marginHorizontal: 10,
+    marginTop: '7%'
   },
   userBtnTxt: {
     color: '#FFFFFF',
+    fontSize: 16,
   },
   userInfoWrapper: {
     flexDirection: 'row',

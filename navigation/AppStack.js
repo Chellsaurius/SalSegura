@@ -207,7 +207,7 @@ const AppStack = () => {
           component={FeedStack}
           options={{
             headerShown: false,
-            tabBarLabel: 'Reportes Ciudadania',
+            tabBarLabel: 'Reportes Ciudadanía',
             // tabBarVisible: route.state && route.state.index === 0,
             tabBarIcon: ({color, size}) => (
               <MaterialCommunityIcons

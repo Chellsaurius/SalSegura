@@ -100,7 +100,7 @@ export const BtnStatus = styled.View`
   justify-content: center;
   margin-left: 50%;
   margin-right: 5%;
-  width: 40%;
+  width: 50%;
   margin-bottom: 5%;
   align-items: center;
   align-self: center;

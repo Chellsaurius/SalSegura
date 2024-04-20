@@ -178,7 +178,7 @@ const AddPostScreen = () => {
           <InputWrapper>
             {image != null ? <AddImage required source={{uri: image}} /> : <AddImage source={require('../assets/img/sImg2.png')} />}
             <InputField
-              placeholder="Calle:"
+              placeholder="Calle y Número:"
               placeholderTextColor="grey"
               multiline
               numberOfLines={1}

@@ -224,8 +224,8 @@ const EditProfileScreen = () => {
             onPress={() => setModalVisible(true)}>
             <View
               style={{
-                height: 100,
-                width: 100,
+                height: 170,
+                width: 170,
                 borderRadius: 15,
                 justifyContent: 'center',
                 alignItems: 'center',
@@ -264,13 +264,13 @@ const EditProfileScreen = () => {
           </TouchableOpacity>
           <Text
             style={{
-              marginTop: 50,
+              // marginTop: 35,
               marginBottom: 10,
               fontSize: 18,
               fontWeight: 'bold',
               color: 'black',
             }}>
-            {/* Natanael Cervantes */}
+            
             {userData ? userData.fname : ''} {userData ? userData.lname : ''}
           </Text>
           {/* <Text style={styles.textStyle}>{user.uid}</Text> */}
@@ -374,9 +374,10 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   button: {
-    marginTop: 20,
+    marginTop: 10,
+    marginBottom: 30,
     borderRadius: 20,
-    padding: 10,
+    // padding: 10,
     elevation: 2,
   },
   buttonOpen: {

@@ -59,7 +59,7 @@ const LoginScreen = ({navigation}) => {
         /> */}
 
         <FormButton
-          buttonTitle="Entrar"
+          buttonTitle="Ingresar"
           onPress={() => {
             if (email && password) {
               // if (password === confirmPassword) {
